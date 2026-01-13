@@ -24,7 +24,6 @@ ADMIN_EMAIL = "support@illoominate.app"
 FROM_EMAIL = "noreply@illoominate.app"
 
 # Node.js compatibility
-node_compat = true
 compatibility_flags = ["nodejs_compat"]
 
 # For local development, create a .dev.vars file with:
