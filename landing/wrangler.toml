@@ -13,7 +13,7 @@ pages_build_output_dir = "./dist"
 [[d1_databases]]
 binding = "DB"
 database_name = "illoominate-waitlist"
-database_id = "TO_BE_CREATED"
+database_id = "af2b2710-9f83-46c7-8e61-a3326c8fd5c7"
 
 # Environment Variables (non-secret)
 # Secrets should be set via: wrangler secret put SECRET_NAME
