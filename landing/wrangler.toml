@@ -1,0 +1,34 @@
+# Wrangler configuration for Illoominate Landing Page
+# See: https://developers.cloudflare.com/pages/functions/wrangler-configuration/
+
+name = "illoominate-landing"
+compatibility_date = "2024-11-01"
+
+# Pages-specific configuration
+pages_build_output_dir = "./dist"
+
+# D1 Database Bindings
+# NOTE: After creating the D1 database, update the `database_id` below
+# Create database with: wrangler d1 create illoominate-waitlist
+[[d1_databases]]
+binding = "DB"
+database_name = "illoominate-waitlist"
+database_id = "TO_BE_CREATED"
+
+# Environment Variables (non-secret)
+# Secrets should be set via: wrangler secret put SECRET_NAME
+[vars]
+TURNSTILE_SITE_KEY = "1x00000000000000000000AA"
+VERIFICATION_BASE_URL = "https://illoominate.app"
+ADMIN_EMAIL = "support@illoominate.app"
+FROM_EMAIL = "noreply@illoominate.app"
+
+# Node.js compatibility
+node_compat = true
+compatibility_flags = ["nodejs_compat"]
+
+# For local development, create a .dev.vars file with:
+# RESEND_API_KEY=re_test_key_placeholder
+# RESEND_AUDIENCE_ID=aud_test_placeholder
+# RESEND_WEBHOOK_SECRET=whsec_test_placeholder
+# TURNSTILE_SECRET_KEY=1x0000000000000000000000000000000AA

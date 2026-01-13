@@ -1,0 +1,3 @@
+module FullDisclosureSDK {
+    header "/Users/cipher/Repositories/fulldisclosure/sdks/ios/FullDisclosureSDK/.build/arm64-apple-macosx/debug/FullDisclosureSDK.build/include/FullDisclosureSDK-Swift.h"
+}

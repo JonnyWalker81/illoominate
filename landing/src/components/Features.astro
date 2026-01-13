@@ -1,0 +1,86 @@
+---
+const features = [
+  {
+    icon: `<svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+    </svg>`,
+    title: 'Unified Feedback Inbox',
+    description: 'Collect feedback from anywhere - widgets, email, Slack, Intercom, API. Everything lands in one organized place.',
+    color: 'indigo',
+  },
+  {
+    icon: `<svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M5 11l7-7 7 7M5 19l7-7 7 7" />
+    </svg>`,
+    title: 'Community Voting',
+    description: 'Let users vote on features they want most. See real demand, not just the loudest voices.',
+    color: 'purple',
+  },
+  {
+    icon: `<svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+    </svg>`,
+    title: 'AI-Powered Insights',
+    description: 'Automatic duplicate detection, sentiment analysis, and smart categorization. Let AI do the heavy lifting.',
+    color: 'amber',
+  },
+  {
+    icon: `<svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+    </svg>`,
+    title: 'Public Roadmap',
+    description: 'Share what you\'re building and why. Keep users informed and engaged with your product direction.',
+    color: 'emerald',
+  },
+  {
+    icon: `<svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+    </svg>`,
+    title: 'Auto-Notifications',
+    description: 'Automatically notify users when their requested feature ships. Close the loop without lifting a finger.',
+    color: 'blue',
+  },
+  {
+    icon: `<svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M11 4a2 2 0 114 0v1a1 1 0 001 1h3a1 1 0 011 1v3a1 1 0 01-1 1h-1a2 2 0 100 4h1a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1v-1a2 2 0 10-4 0v1a1 1 0 01-1 1H7a1 1 0 01-1-1v-3a1 1 0 00-1-1H4a2 2 0 110-4h1a1 1 0 001-1V7a1 1 0 011-1h3a1 1 0 001-1V4z" />
+    </svg>`,
+    title: 'Seamless Integrations',
+    description: 'Connect with Linear, Jira, GitHub, Notion, and more. Feedback flows into your existing workflow.',
+    color: 'rose',
+  },
+];
+
+const colorClasses: Record<string, { bg: string; text: string; hover: string }> = {
+  indigo: { bg: 'bg-indigo-900/50', text: 'text-indigo-400', hover: 'hover:border-indigo-700' },
+  purple: { bg: 'bg-purple-900/50', text: 'text-purple-400', hover: 'hover:border-purple-700' },
+  amber: { bg: 'bg-amber-900/50', text: 'text-amber-400', hover: 'hover:border-amber-700' },
+  emerald: { bg: 'bg-emerald-900/50', text: 'text-emerald-400', hover: 'hover:border-emerald-700' },
+  blue: { bg: 'bg-blue-900/50', text: 'text-blue-400', hover: 'hover:border-blue-700' },
+  rose: { bg: 'bg-rose-900/50', text: 'text-rose-400', hover: 'hover:border-rose-700' },
+};
+---
+
+<section id="features" class="section-padding bg-gradient-features">
+  <div class="max-w-7xl mx-auto">
+    <div class="text-center mb-12">
+      <span class="inline-block px-4 py-1 bg-indigo-900/50 text-indigo-300 rounded-full text-sm font-medium mb-4">Features</span>
+      <h2 class="section-title">Everything You Need to Master Feedback</h2>
+      <p class="section-subtitle">
+        From collection to action, Illoominate gives your team the tools to turn user insights into product wins.
+      </p>
+    </div>
+
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {features.map((feature, index) => {
+        const colors = colorClasses[feature.color];
+        return (
+          <div class={`card group ${colors.hover}`} style={`animation-delay: ${index * 100}ms`}>
+            <div class={`w-12 h-12 rounded-xl ${colors.bg} ${colors.text} flex items-center justify-center mb-4`} set:html={feature.icon} />
+            <h3 class="text-lg font-semibold text-white mb-2">{feature.title}</h3>
+            <p class="text-slate-400">{feature.description}</p>
+          </div>
+        );
+      })}
+    </div>
+  </div>
+</section>

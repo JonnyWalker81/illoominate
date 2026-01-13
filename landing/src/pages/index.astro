@@ -1,0 +1,26 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Hero from '../components/Hero';
+import Problems from '../components/Problems.astro';
+import Features from '../components/Features.astro';
+import HowItWorks from '../components/HowItWorks.astro';
+import UseCases from '../components/UseCases.astro';
+import Waitlist from '../components/Waitlist';
+import FAQ from '../components/FAQ.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<Layout title="Illoominate - Turn User Feedback Into Your Product Roadmap">
+  <Header />
+  <main>
+    <Hero client:load />
+    <Problems />
+    <Features />
+    <HowItWorks />
+    <UseCases />
+    <Waitlist client:visible />
+    <FAQ />
+  </main>
+  <Footer />
+</Layout>

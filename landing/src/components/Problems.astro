@@ -1,0 +1,64 @@
+---
+const problems = [
+  {
+    icon: `<svg class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+    </svg>`,
+    title: 'Feedback Gets Lost',
+    description: 'Important feature requests buried in email threads, Slack messages, and support tickets. You know the value is there, but finding it is impossible.',
+  },
+  {
+    icon: `<svg class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+    </svg>`,
+    title: 'No Idea What to Build',
+    description: 'Your roadmap is driven by gut feelings and the loudest voices. You\'re not sure if you\'re building what users actually want or need.',
+  },
+  {
+    icon: `<svg class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636" />
+    </svg>`,
+    title: 'Users Feel Ignored',
+    description: 'Customers submit feedback and never hear back. They don\'t know if you saw it, care about it, or plan to act on it.',
+  },
+  {
+    icon: `<svg class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+    </svg>`,
+    title: 'Duplicate Requests',
+    description: 'The same feature gets requested 50 different ways. You waste time explaining it\'s already planned instead of building it.',
+  },
+];
+---
+
+<section class="section-padding bg-slate-900">
+  <div class="max-w-7xl mx-auto">
+    <div class="text-center mb-12">
+      <span class="inline-block px-4 py-1 bg-red-900/50 text-red-300 rounded-full text-sm font-medium mb-4">The Problem</span>
+      <h2 class="section-title">Sound Familiar?</h2>
+      <p class="section-subtitle">
+        You're not alone. These challenges cost product teams countless hours and missed opportunities every week.
+      </p>
+    </div>
+
+    <div class="grid md:grid-cols-2 gap-6 lg:gap-8">
+      {problems.map((problem, index) => (
+        <div class="card group hover:border-red-700" style={`animation-delay: ${index * 100}ms`}>
+          <div class="flex items-start gap-4">
+            <div class="flex-shrink-0 w-14 h-14 rounded-xl bg-red-900/50 text-red-400 flex items-center justify-center group-hover:bg-red-800/50 transition-colors duration-200" set:html={problem.icon} />
+            <div>
+              <h3 class="text-lg font-semibold text-white mb-2">{problem.title}</h3>
+              <p class="text-slate-400">{problem.description}</p>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <div class="mt-12 text-center">
+      <p class="text-lg text-slate-400">
+        <span class="font-semibold text-white">There's a better way.</span> Let us show you how Illoominate fixes this.
+      </p>
+    </div>
+  </div>
+</section>

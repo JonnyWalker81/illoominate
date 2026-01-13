@@ -1,0 +1,84 @@
+---
+const useCases = [
+  {
+    icon: `<svg class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+    </svg>`,
+    title: 'SaaS Companies',
+    description: 'Build what customers actually want. Reduce churn by showing users their voice matters.',
+    features: ['Customer portal', 'Usage-based insights', 'Churn prediction'],
+    gradient: 'from-indigo-500 to-blue-600',
+    bgLight: 'bg-indigo-950/50',
+  },
+  {
+    icon: `<svg class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
+    </svg>`,
+    title: 'Open Source Projects',
+    description: 'Engage your community without drowning in GitHub issues. Free tier for OSS.',
+    features: ['GitHub sync', 'Community voting', 'Contributor recognition'],
+    gradient: 'from-emerald-500 to-teal-600',
+    bgLight: 'bg-emerald-950/50',
+  },
+  {
+    icon: `<svg class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" />
+    </svg>`,
+    title: 'Mobile Apps',
+    description: 'Capture in-app feedback seamlessly. Connect feature requests to app store reviews.',
+    features: ['In-app widget', 'Review aggregation', 'Push notifications'],
+    gradient: 'from-purple-500 to-pink-600',
+    bgLight: 'bg-purple-950/50',
+  },
+  {
+    icon: `<svg class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+      <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+    </svg>`,
+    title: 'Dev Tools',
+    description: 'Technical users expect transparency. Show them your roadmap and let them shape the product.',
+    features: ['API access', 'Changelog automation', 'Technical roadmap'],
+    gradient: 'from-amber-500 to-orange-600',
+    bgLight: 'bg-amber-950/50',
+  },
+];
+---
+
+<section class="section-padding bg-slate-900">
+  <div class="max-w-7xl mx-auto">
+    <div class="text-center mb-12">
+      <span class="inline-block px-4 py-1 bg-purple-900/50 text-purple-300 rounded-full text-sm font-medium mb-4">Use Cases</span>
+      <h2 class="section-title">Built for Teams Like Yours</h2>
+      <p class="section-subtitle">
+        Whether you're a startup or scaling fast, Illoominate adapts to your workflow.
+      </p>
+    </div>
+
+    <div class="grid md:grid-cols-2 gap-6 lg:gap-8">
+      {useCases.map((useCase, index) => (
+        <div class={`group relative overflow-hidden rounded-2xl ${useCase.bgLight} border border-slate-700 p-8 transition-all duration-300 hover:shadow-xl`}>
+          <!-- Gradient accent -->
+          <div class={`absolute inset-0 bg-gradient-to-br ${useCase.gradient} opacity-0 group-hover:opacity-10 transition-opacity duration-300`}></div>
+
+          <div class="relative">
+            <div class={`w-16 h-16 rounded-2xl bg-gradient-to-br ${useCase.gradient} text-white flex items-center justify-center mb-6 shadow-lg`} set:html={useCase.icon} />
+
+            <h3 class="text-2xl font-bold text-white mb-3">{useCase.title}</h3>
+            <p class="text-slate-400 mb-6">{useCase.description}</p>
+
+            <ul class="space-y-2">
+              {useCase.features.map((feature) => (
+                <li class="flex items-center gap-2 text-sm text-slate-300">
+                  <svg class="w-5 h-5 text-emerald-400 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                  </svg>
+                  {feature}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
