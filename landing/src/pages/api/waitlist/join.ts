@@ -45,10 +45,20 @@ const RATE_LIMIT_MAX = 5;
 const RATE_LIMIT_WINDOW_MS = 60 * 60 * 1000; // 1 hour
 
 export const POST: APIRoute = async ({ request, locals }) => {
-  const runtime = (locals as any).runtime;
-  const env = runtime.env as Env;
-
   try {
+    // Access Cloudflare runtime
+    const runtime = (locals as any).runtime;
+    if (!runtime) {
+      console.error('Runtime not available. locals:', JSON.stringify(locals));
+      return jsonResponse({ error: 'Runtime not available', debug: Object.keys(locals) }, 500);
+    }
+
+    const env = runtime.env as Env;
+    if (!env?.DB) {
+      console.error('DB binding not available. env keys:', Object.keys(env || {}));
+      return jsonResponse({ error: 'Database not configured', debug: Object.keys(env || {}) }, 500);
+    }
+
     // Parse request body
     const body = (await request.json()) as WaitlistJoinRequest;
     const { email, name, referral_code, referral_source } = body;
@@ -150,8 +160,13 @@ export const POST: APIRoute = async ({ request, locals }) => {
     });
   } catch (error) {
     console.error('Waitlist join error:', error);
+    const errorMessage = error instanceof Error ? error.message : String(error);
+    const errorStack = error instanceof Error ? error.stack : undefined;
     return jsonResponse(
-      { error: 'Something went wrong. Please try again.' },
+      {
+        error: 'Something went wrong. Please try again.',
+        debug: { message: errorMessage, stack: errorStack }
+      },
       500
     );
   }
