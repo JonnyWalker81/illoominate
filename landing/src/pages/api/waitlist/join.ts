@@ -287,7 +287,7 @@ async function sendVerificationEmail(
   if (!response.ok) {
     const error = await response.text();
     console.error('Resend error:', error);
-    throw new Error('Failed to send verification email');
+    throw new Error(`Failed to send verification email: ${error}`);
   }
 }
 

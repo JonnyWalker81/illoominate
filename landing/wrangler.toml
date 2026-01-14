@@ -31,3 +31,643 @@ compatibility_flags = ["nodejs_compat"]
 # RESEND_AUDIENCE_ID=aud_test_placeholder
 # RESEND_WEBHOOK_SECRET=whsec_test_placeholder
 # TURNSTILE_SECRET_KEY=1x0000000000000000000000000000000AA
+PRD: Illoominate — Native In-App Feedback SDK + Prioritization Platform (Canny Alternative)
+1) Objective
+
+Build a native in-app feedback capture layer (mobile + web) that turns user friction into actionable, deduped, prioritized tickets in Linear/Jira—without punishing adoption via “tracked users” pricing.
+
+2) Success criteria
+
+Business
+
+MVP can support 10 pilot customers, paid tiers live, self-serve onboarding.
+
+Time-to-integrate < 10 minutes for RN + Flutter sample apps.
+
+90-day target: 20 paying customers, <$200 CAC (dev-led).
+
+Product
+
+≥60% of incoming feedback auto-classified (Bug/Idea/UX/Other) with confidence score.
+
+≥30% duplicate reduction via dedupe/clustering.
+
+Median time from feedback → ticket created < 2 minutes (with automation on).
+
+Reliability
+
+99.9% API availability (MVP can be 99.5% but must have alerting).
+
+SDK delivery guarantees: at-least-once delivery with idempotency.
+
+3) Target users & jobs-to-be-done
+Primary ICP
+
+Mid-stage startups + growing SaaS (mobile and/or web), dev-led teams with Linear/Jira.
+
+Personas
+
+Mobile dev / full-stack dev
+
+Wants fast drop-in SDK, minimal maintenance, strong docs, predictable pricing.
+
+Product manager
+
+Wants structured themes, dedupe, prioritization, roadmap visibility, closed-loop notifications.
+
+Support/CS
+
+Wants routing, tagging, and fewer “where do I send feedback?” tickets.
+
+Core JTBD
+
+“Let users give feedback without leaving the app and include context so we can act fast.”
+
+“Turn feedback into prioritized work in our existing tools.”
+
+“Avoid noise: spam + duplicates should be handled automatically.”
+
+4) Competitive positioning (requirements-driven)
+
+Differentiators to bake into product:
+
+True native in-app UI (not webview feel)
+
+Predictable pricing (not tracked-users scaling)
+
+Auto-dedupe + spam controls
+
+Strong filtering/reporting
+
+Workflow-grade Linear/Jira integration (2-way status + close loop)
+
+Context-rich capture
+
+Opinionated structure (bug/idea/ux)
+
+Trust & control (PII redaction, export, region options later)
+
+5) Product scope & architecture (high level)
+Components
+
+SDKs
+
+React Native SDK (wrapper over native modules)
+
+Flutter SDK (platform channels)
+
+Web widget (JS/React)
+
+Native UI components: SwiftUI + Jetpack Compose “core UI kit” (wrapped)
+
+API + Data
+
+Ingestion API (events/feedback)
+
+Auth (workspace/app keys + end-user identity mapping)
+
+Storage (Postgres)
+
+Queue/async jobs (dedupe, enrichment, integrations)
+
+Files/attachments (S3/GCS)
+
+Web App (Creator portal)
+
+Inbox (triage)
+
+Themes/clusters
+
+Roadmap/feature board (optional MVP-lite)
+
+Integrations settings
+
+Analytics & reports
+
+Integrations
+
+Linear (MVP)
+
+Jira (Phase 2)
+
+Slack notifications (Phase 1.5)
+
+Webhooks (MVP)
+
+6) Functional requirements (epics → stories → tasks)
+Epic A — Workspace, Apps, Auth, and Identity
+
+Goal: Let companies create a workspace, register apps, and map end users reliably.
+
+A1. Workspace + App management
+
+Create workspace
+
+Create app (iOS/Android/Web)
+
+Generate API keys (publishable + secret)
+
+Environments (dev/staging/prod)
+
+Tasks
+
+DB schema: workspaces, apps, api_keys, environments
+
+API: CRUD workspaces/apps/keys
+
+UI: settings pages
+
+Key rotation + revoke
+
+Acceptance criteria
+
+Apps have separate keys per environment
+
+Revoked keys immediately fail auth
+
+Audit log event for key create/revoke
+
+A2. End-user identity mapping
+
+SDK can set user identity: userId, optional email, plan, segment attributes
+
+Anonymous support with stable device/session id
+
+GDPR-style “delete user data” endpoint
+
+Tasks
+
+SDK API: identify(user) + setAttributes()
+
+Server: user table keyed by (app_id, external_user_id OR anon_id)
+
+Endpoint: delete/export user data
+
+Acceptance criteria
+
+Feedback items show user identity + attributes in portal
+
+Anon users merge into identified user when identify called later (configurable)
+
+Epic B — In-App Feedback Capture (Native UI)
+
+Goal: Users can submit feedback without leaving app; includes context by default.
+
+B1. Feedback entry UI
+
+Modes:
+
+Floating button / menu entry
+
+“Shake to report” (mobile optional)
+
+Custom trigger API
+
+Fields:
+
+Type (Bug/Idea/UX/Other)
+
+Title (optional) + description
+
+Attachments (screenshot, file)
+
+Consent toggle for diagnostics (logs/device info)
+
+Tasks
+
+Design system tokens + native UI components
+
+RN wrapper + Flutter wrapper
+
+Config options (theme, language, trigger)
+
+Accessibility + dark mode
+
+Acceptance criteria
+
+Feels native (no webviews)
+
+Works offline: queues submission and retries
+
+Attach screenshot on mobile with 1 tap
+
+B2. Context capture
+
+Capture (opt-in defaults by platform constraints):
+
+App version/build, OS version, device model
+
+Screen/route name (SDK-provided)
+
+Session id, timestamps
+
+Feature flags (SDK-provided)
+
+Optional logs (bounded size)
+
+Tasks
+
+SDK context collector modules
+
+Server schema for metadata
+
+PII redaction hooks (client and server)
+
+Acceptance criteria
+
+Each feedback item has structured metadata
+
+Privacy controls: configurable allowlist of fields
+
+Epic C — Ingestion API + Reliability
+
+Goal: Durable, secure ingestion; idempotent and rate-limited.
+
+C1. Ingestion endpoints
+
+POST /v1/feedback
+
+POST /v1/attachments (presigned upload)
+
+POST /v1/events (optional; later for analytics)
+
+Tasks
+
+Auth middleware (publishable key for ingestion)
+
+Idempotency keys per submission
+
+Rate limiting per app/environment
+
+Request validation + schema versioning
+
+Acceptance criteria
+
+At-least-once delivery supported without duplicate creation
+
+Backward compatible schema changes
+
+C2. Attachments pipeline
+
+Direct-to-storage uploads
+
+Virus/malware scan (Phase 2 if needed; MVP can block executables + content-type enforcement)
+
+Preview safe types only
+
+Tasks
+
+Presigned URL generator
+
+MIME sniffing server-side
+
+Storage lifecycle rules
+
+Acceptance criteria
+
+No inline execution risk in portal previews (Content-Disposition/Content-Type safe handling)
+
+Epic D — Triage Inbox, Filters, and Analytics (Creator Portal)
+
+Goal: Make triage fast (your “reporting/filtering” differentiator).
+
+D1. Inbox
+
+Views:
+
+New, Needs review, Planned, Shipped, Closed
+Actions:
+
+Tag, assign, merge, create ticket, reply
+
+Bulk actions
+
+Tasks
+
+DB: feedback_items, statuses, tags, assignees
+
+UI: inbox table + detail drawer
+
+Bulk operations APIs
+
+Acceptance criteria
+
+Filter by type, tag, status, date, segment, version, platform
+
+Saved views (Phase 1.5 acceptable)
+
+D2. Reporting
+
+Trends: volume over time by type/segment/version
+
+“Top themes” (based on dedupe/clusters)
+
+Time-to-first-response and time-to-ticket
+
+Tasks
+
+Metrics pipeline (simple aggregates to start)
+
+UI charts + export CSV
+
+Acceptance criteria
+
+Exportable report for last 30/90 days
+
+Shows top 10 themes and growth direction
+
+Epic E — Dedupe, Spam Control, and Theme Clustering
+
+Goal: Reduce noise; this is core vs Canny’s common complaints.
+
+E1. Duplicate detection (MVP)
+
+Similarity hashing over normalized text
+
+Detect duplicates within same app + across boards
+
+Suggest merges during triage
+
+Tasks
+
+Text normalization (stopwords, stemming optional)
+
+Similarity: embeddings or trigram + threshold
+
+Merge model: canonical item + linked duplicates
+
+Acceptance criteria
+
+On new submission, system suggests duplicates with confidence
+
+Merge preserves votes/comments and keeps audit trail
+
+E2. Spam control (MVP)
+
+Rate limits per user/session
+
+Heuristics: repeated text, links, profanity, burst submissions
+
+“Trust score” per user (starts neutral)
+
+Tasks
+
+Rules engine + scoring
+
+Portal: spam queue + one-click ban
+
+Acceptance criteria
+
+Spam queue exists; false positives recoverable
+
+Banned users cannot submit (configurable)
+
+E3. AI clustering (Phase 2)
+
+Auto theme detection with labels
+
+Route to teams based on theme
+
+Epic F — Voting, Boards, and Closed-Loop Notifications
+
+Goal: Deliver the value of a feedback board without becoming “just another portal.”
+
+F1. Voting (MVP-lite)
+
+Optional: embed “vote on features” screen inside app
+
+Or public web board later (Phase 2)
+
+Tasks
+
+Data: feature_requests, votes
+
+SDK UI: feature list + vote button
+
+Portal UI: feature request list and vote counts
+
+Acceptance criteria
+
+Users can vote in-app with identity/anon support
+
+Product team can mark as planned/shipped
+
+F2. Closed-loop notifications
+
+When status changes, notify the user:
+
+In-app inbox (MVP)
+
+Email (Phase 1.5)
+
+Push (Phase 2)
+
+Tasks
+
+Notification preferences
+
+Event triggers on status change
+
+SDK “Updates” UI component
+
+Acceptance criteria
+
+User can see “We shipped this” without leaving app
+
+Epic G — Integrations (Linear-first)
+
+Goal: Deep workflow integration (a consistent weak point in reviews).
+
+G1. Linear integration (MVP)
+
+OAuth connect to Linear
+
+Create issue from feedback item
+
+Sync status back (at least one-way initially; two-way preferred)
+
+Tasks
+
+OAuth flow + token storage
+
+Mapping rules (project/team labels)
+
+Background job worker for sync
+
+UI: integration setup wizard
+
+Acceptance criteria
+
+From inbox: “Create Linear issue” works in <10s
+
+Link stored + visible; status sync updates portal
+
+G2. Webhooks (MVP)
+
+Fire webhooks on new feedback, status change, merge
+
+Tasks
+
+Webhook config UI + secret signing
+
+Retry policy + dead-letter queue
+
+G3. Slack notifications (Phase 1.5)
+
+Post new feedback to channel with actions
+
+G4. Jira (Phase 2)
+Epic H — Pricing, Billing, and Limits (Predictable Pricing)
+
+Goal: Clear tiers; avoid tracked-user trap.
+
+H1. Billing model
+
+Proposed:
+
+Tier by apps/projects + feature set, not “tracked users”
+
+Soft caps: feedback items/month + attachments storage
+
+Overages: per 1,000 feedback items or per GB
+
+Tasks
+
+Stripe integration
+
+Plans + entitlements service
+
+Metering (counts feedback + storage)
+
+Upgrade/downgrade flows
+
+Acceptance criteria
+
+Plan page shows predictable limits
+
+No automatic tier jump without explicit upgrade (overage billing is transparent)
+
+Epic I — Security, Privacy, and Compliance (MVP-safe)
+
+Goal: Trust moat without boiling the ocean.
+
+I1. Data controls
+
+Field allowlist/denylist for captured metadata
+
+PII redaction pipeline (server-side)
+
+Access control: RBAC (Admin/Member/Read-only)
+
+Tasks
+
+RBAC model + middleware
+
+Redaction config UI
+
+Audit logs (who changed status, who exported data)
+
+Acceptance criteria
+
+Admin can disable sensitive fields (e.g., logs)
+
+Audit log downloadable
+
+I2. Data export & deletion
+
+Export workspace data (CSV/JSON)
+
+Delete user data endpoint (per app)
+
+7) Non-functional requirements
+
+SDK performance: feedback UI must open in <300ms on modern devices
+
+Offline: queue submissions; exponential backoff; max storage bound
+
+Security: TLS, signed webhooks, least-privileged tokens, secure attachment serving
+
+Privacy: configurable capture; explicit consent for diagnostics; retention policies
+
+Scalability: ingestion endpoint handles bursts (mobile release days)
+
+8) MVP definition (what ships first)
+
+MVP (6–8 weeks solo-friendly, if focused)
+
+RN SDK + Flutter SDK basic
+
+Native UI feedback form + screenshot attach
+
+Ingestion API + attachments
+
+Creator portal: Inbox + filters + basic analytics
+
+Dedupe suggestions (simple)
+
+Linear integration (create issue)
+
+Webhooks
+
+Stripe billing + predictable tiers
+
+Phase 1.5
+
+Saved views, Slack notifications, closed-loop in-app updates
+
+Phase 2
+
+Jira, AI clustering/auto-routing, public board, advanced reporting, data regions
+
+9) Task generation format (ready to drop into Linear/Jira)
+
+Below is a task template you can replicate:
+
+Task title: [Epic X] <short verb phrase>
+Description: What + why
+Acceptance criteria: bullet list
+Dependencies: tasks/epics
+Estimate: S/M/L
+Owner: (you / contractor)
+
+Example tasks (seed backlog)
+
+[A1] Create workspace/app/key schema + APIs
+
+[B1] Build native feedback UI kit (SwiftUI/Compose)
+
+[B1] RN wrapper for native feedback UI
+
+[B1] Flutter wrapper for native feedback UI
+
+[B2] Implement context collectors + config allowlist
+
+[C1] Ingestion endpoint with idempotency + rate limits
+
+[C2] Presigned attachment uploads + safe preview handling
+
+[D1] Inbox UI + detail drawer + bulk actions
+
+[D1] Filters + basic saved view
+
+[E1] Similarity-based duplicate detection + merge model
+
+[E2] Spam scoring + spam queue
+
+[G1] Linear OAuth + create issue from feedback
+
+[G2] Webhook delivery + retries + signatures
+
+[H1] Stripe plans + entitlements + metering
+
+[I1] RBAC + audit log + redaction pipeline
+
+10) Open questions (default decisions to avoid stalling)
+
+These don’t block tasking; pick defaults now:
+
+Board/public portal: default no for MVP; keep “in-app list + portal inbox.”
+
+User authentication: default “anonymous + optional identify”; do not require login to submit in-app.
+
+AI: default to deterministic dedupe + heuristics first; add embeddings later behind a toggle.
