@@ -95,3 +95,4 @@ result-*
 !package.json
 !tsconfig.json
 !**/fixtures/*.json
+/notes.org

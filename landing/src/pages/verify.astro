@@ -90,7 +90,7 @@ const token = Astro.url.searchParams.get('token');
       const inviteCodeDisplay = document.getElementById('invite-code-display');
 
       try {
-        const response = await fetch(`/verify?token=${encodeURIComponent(token)}`, {
+        const response = await fetch(`/api/verify?token=${encodeURIComponent(token)}`, {
           method: 'GET',
         });
 
