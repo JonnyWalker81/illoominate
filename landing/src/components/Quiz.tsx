@@ -5,22 +5,40 @@ import {
   type QuizResult,
 } from '../lib/quiz-logic';
 
+export interface QuizResponse {
+  question_index: number;
+  question_text: string;
+  selected_option: string;
+  option_value: number;
+}
+
 interface QuizProps {
-  onComplete?: (result: QuizResult, scores: number[]) => void;
+  onComplete?: (result: QuizResult, scores: number[], responses: QuizResponse[]) => void;
 }
 
 export default function Quiz({ onComplete }: QuizProps) {
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [scores, setScores] = useState<number[]>([]);
+  const [responses, setResponses] = useState<QuizResponse[]>([]);
   const [result, setResult] = useState<QuizResult | null>(null);
   const [isAnimating, setIsAnimating] = useState(false);
 
-  const handleAnswer = (value: number) => {
+  const handleAnswer = (value: number, optionText: string) => {
     if (isAnimating) return;
 
     setIsAnimating(true);
     const newScores = [...scores, value];
     setScores(newScores);
+
+    const question = quizQuestions[currentQuestion];
+    const newResponse: QuizResponse = {
+      question_index: currentQuestion,
+      question_text: question.question,
+      selected_option: optionText,
+      option_value: value,
+    };
+    const newResponses = [...responses, newResponse];
+    setResponses(newResponses);
 
     setTimeout(() => {
       if (currentQuestion < quizQuestions.length - 1) {
@@ -29,7 +47,7 @@ export default function Quiz({ onComplete }: QuizProps) {
       } else {
         const quizResult = getResultFromScores(newScores);
         setResult(quizResult);
-        onComplete?.(quizResult, newScores);
+        onComplete?.(quizResult, newScores, newResponses);
         setIsAnimating(false);
       }
     }, 300);
@@ -38,6 +56,7 @@ export default function Quiz({ onComplete }: QuizProps) {
   const resetQuiz = () => {
     setCurrentQuestion(0);
     setScores([]);
+    setResponses([]);
     setResult(null);
   };
 
@@ -138,7 +157,7 @@ export default function Quiz({ onComplete }: QuizProps) {
               {question.options.map((option, index) => (
                 <button
                   key={index}
-                  onClick={() => handleAnswer(option.value)}
+                  onClick={() => handleAnswer(option.value, option.text)}
                   className="w-full p-4 text-left border-2 border-slate-600 rounded-xl hover:border-indigo-500 hover:bg-indigo-900/30 transition-all duration-200 group"
                 >
                   <div className="flex items-center gap-4">

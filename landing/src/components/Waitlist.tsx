@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import Quiz from './Quiz';
+import Quiz, { type QuizResponse } from './Quiz';
 import { type QuizResult } from '../lib/quiz-logic';
 
 interface WaitlistProps {
@@ -23,6 +23,8 @@ export default function Waitlist({ referralCode: initialReferralCode }: Waitlist
   const [quizCompleted, setQuizCompleted] = useState(false);
   const [quizSkipped, setQuizSkipped] = useState(false);
   const [quizResult, setQuizResult] = useState<QuizResult | null>(null);
+  const [submittedEmail, setSubmittedEmail] = useState<string | null>(null);
+  const [quizSubmitting, setQuizSubmitting] = useState(false);
 
   // Extract referral code from URL on mount
   useEffect(() => {
@@ -64,6 +66,7 @@ export default function Waitlist({ referralCode: initialReferralCode }: Waitlist
         inviteCode: data.invite_code || '',
         message: data.message || 'Success',
       });
+      setSubmittedEmail(email);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Something went wrong');
     } finally {
@@ -80,9 +83,27 @@ export default function Waitlist({ referralCode: initialReferralCode }: Waitlist
     }
   };
 
-  const handleQuizComplete = (result: QuizResult) => {
+  const handleQuizComplete = async (result: QuizResult, _scores: number[], responses: QuizResponse[]) => {
     setQuizResult(result);
     setQuizCompleted(true);
+    setQuizSubmitting(true);
+
+    try {
+      const sessionId = crypto.randomUUID();
+      await fetch('/api/quiz/submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          session_id: sessionId,
+          responses,
+          email: submittedEmail,
+        }),
+      });
+    } catch (error) {
+      console.error('Failed to submit quiz:', error);
+    } finally {
+      setQuizSubmitting(false);
+    }
   };
 
   if (success) {
