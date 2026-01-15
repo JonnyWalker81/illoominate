@@ -49,6 +49,7 @@ CREATE TABLE IF NOT EXISTS waitlist (
     'feedback_pro', 'feedback_champion'
   )),
   quiz_responses TEXT,          -- JSON array of responses
+  quiz_session_id TEXT,         -- Links to quiz_responses.session_id
 
   -- Attribution tracking (how did you hear about us)
   referral_source TEXT CHECK(referral_source IN (
@@ -142,6 +143,7 @@ CREATE INDEX IF NOT EXISTS idx_waitlist_invite_code ON waitlist(invite_code);
 CREATE INDEX IF NOT EXISTS idx_waitlist_referral_code ON waitlist(referral_code);
 CREATE INDEX IF NOT EXISTS idx_waitlist_tier ON waitlist(tier);
 CREATE INDEX IF NOT EXISTS idx_waitlist_quiz_result ON waitlist(quiz_result_type);
+CREATE INDEX IF NOT EXISTS idx_waitlist_quiz_session_id ON waitlist(quiz_session_id);
 CREATE INDEX IF NOT EXISTS idx_waitlist_resend_contact_id ON waitlist(resend_contact_id);
 CREATE INDEX IF NOT EXISTS idx_waitlist_resend_sync_status ON waitlist(resend_sync_status);
 CREATE INDEX IF NOT EXISTS idx_waitlist_engagement_score ON waitlist(engagement_score DESC);

@@ -136,10 +136,11 @@ export const POST: APIRoute = async ({ request, locals }) => {
             quiz_completed = true,
             quiz_score = ?,
             quiz_result_type = ?,
-            quiz_responses = ?
+            quiz_responses = ?,
+            quiz_session_id = ?
           WHERE id = ?`
         )
-          .bind(totalScore, resultType, JSON.stringify(responses), waitlistId)
+          .bind(totalScore, resultType, JSON.stringify(responses), session_id, waitlistId)
           .run();
       }
     }

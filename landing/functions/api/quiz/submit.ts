@@ -124,13 +124,15 @@ export async function onRequestPost(context: {
             quiz_completed = true,
             quiz_score = ?,
             quiz_result_type = ?,
-            quiz_responses = ?
+            quiz_responses = ?,
+            quiz_session_id = ?
           WHERE id = ?`
         )
           .bind(
             totalScore,
             resultType,
             JSON.stringify(responses),
+            session_id,
             waitlistId
           )
           .run();
