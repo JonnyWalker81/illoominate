@@ -128,21 +128,19 @@ async function syncToResend(
   name: string | null
 ): Promise<void> {
   try {
-    const response = await fetch(
-      `https://api.resend.com/audiences/${env.RESEND_AUDIENCE_ID}/contacts`,
-      {
-        method: 'POST',
-        headers: {
-          Authorization: `Bearer ${env.RESEND_API_KEY}`,
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          email,
-          first_name: name || undefined,
-          unsubscribed: false,
-        }),
-      }
-    );
+    const response = await fetch('https://api.resend.com/contacts', {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${env.RESEND_API_KEY}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        email,
+        first_name: name || undefined,
+        unsubscribed: false,
+        segments: [{ id: env.RESEND_SEGMENT_ID }],
+      }),
+    });
 
     if (!response.ok) {
       const error = await response.text();

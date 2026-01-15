@@ -166,7 +166,7 @@ describe('Waitlist API', () => {
 
       expect(env.TURNSTILE_SECRET_KEY).toBeDefined();
       expect(env.RESEND_API_KEY).toBeDefined();
-      expect(env.RESEND_AUDIENCE_ID).toBeDefined();
+      expect(env.RESEND_SEGMENT_ID).toBeDefined();
       expect(env.VERIFICATION_BASE_URL).toBe('http://localhost:4321');
       expect(env.DB).toBeDefined();
     });
@@ -272,12 +272,12 @@ describe('Waitlist API', () => {
 
     it('should track fetch calls', async () => {
       await fetch('https://api.resend.com/emails', { method: 'POST' });
-      await fetch('https://api.resend.com/audiences/test', { method: 'POST' });
+      await fetch('https://api.resend.com/contacts', { method: 'POST' });
 
       const calls = fetchMock.getCalls();
       expect(calls).toHaveLength(2);
       expect(calls[0].url).toContain('emails');
-      expect(calls[1].url).toContain('audiences');
+      expect(calls[1].url).toContain('contacts');
     });
   });
 });

@@ -28,7 +28,7 @@ compatibility_flags = ["nodejs_compat"]
 
 # For local development, create a .dev.vars file with:
 # RESEND_API_KEY=re_test_key_placeholder
-# RESEND_AUDIENCE_ID=aud_test_placeholder
+# RESEND_SEGMENT_ID=seg_your_segment_id
 # RESEND_WEBHOOK_SECRET=whsec_test_placeholder
 # TURNSTILE_SECRET_KEY=1x0000000000000000000000000000000AA
 PRD: Illoominate — Native In-App Feedback SDK + Prioritization Platform (Canny Alternative)

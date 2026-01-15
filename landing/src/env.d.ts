@@ -7,7 +7,7 @@ interface Env {
   DB: D1Database;
   TURNSTILE_SECRET_KEY: string;
   RESEND_API_KEY: string;
-  RESEND_AUDIENCE_ID: string;
+  RESEND_SEGMENT_ID: string;
   RESEND_WEBHOOK_SECRET: string;
   VERIFICATION_BASE_URL: string;
   ADMIN_EMAIL: string;

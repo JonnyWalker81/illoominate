@@ -5,7 +5,7 @@ export function createMockEnv(overrides?: Partial<Env>): Env {
     DB: createMockD1(),
     TURNSTILE_SECRET_KEY: '1x0000000000000000000000000000000AA',
     RESEND_API_KEY: 're_test_key_placeholder',
-    RESEND_AUDIENCE_ID: 'aud_test_placeholder',
+    RESEND_SEGMENT_ID: 'seg_test_placeholder',
     RESEND_WEBHOOK_SECRET: 'whsec_test_placeholder',
     VERIFICATION_BASE_URL: 'http://localhost:4321',
     ADMIN_EMAIL: 'admin@test.com',
@@ -183,7 +183,7 @@ export function mockFetch() {
       });
     }
 
-    if (url.includes('api.resend.com/audiences')) {
+    if (url.includes('api.resend.com/contacts')) {
       return new Response(JSON.stringify({ id: 'mock_contact_id' }), {
         status: 200,
       });

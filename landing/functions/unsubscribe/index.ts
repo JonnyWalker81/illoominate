@@ -52,35 +52,27 @@ export async function onRequestGet(context: {
 
 async function removeFromResend(env: Env, email: string): Promise<void> {
   try {
-    // First, get the contact ID
+    // Mark contact as unsubscribed in Resend
     const response = await fetch(
-      `https://api.resend.com/audiences/${env.RESEND_AUDIENCE_ID}/contacts?email=${encodeURIComponent(email)}`,
+      `https://api.resend.com/contacts/${encodeURIComponent(email)}`,
       {
+        method: 'PATCH',
         headers: {
           Authorization: `Bearer ${env.RESEND_API_KEY}`,
+          'Content-Type': 'application/json',
         },
+        body: JSON.stringify({
+          unsubscribed: true,
+        }),
       }
     );
 
-    if (response.ok) {
-      const data = await response.json() as { data: Array<{ id: string }> };
-      if (data.data && data.data.length > 0) {
-        const contactId = data.data[0].id;
-
-        // Delete the contact
-        await fetch(
-          `https://api.resend.com/audiences/${env.RESEND_AUDIENCE_ID}/contacts/${contactId}`,
-          {
-            method: 'DELETE',
-            headers: {
-              Authorization: `Bearer ${env.RESEND_API_KEY}`,
-            },
-          }
-        );
-      }
+    if (!response.ok) {
+      const error = await response.text();
+      console.error('Resend unsubscribe error:', error);
     }
   } catch (error) {
-    console.error('Failed to remove from Resend:', error);
+    console.error('Failed to unsubscribe from Resend:', error);
   }
 }
 
