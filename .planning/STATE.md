@@ -51,7 +51,7 @@ Recent decisions affecting current work:
 
 ### Pending Todos
 
-None.
+1. Deploy landing page to CloudFlare with Resend and D1 (deployment)
 
 ### Blockers/Concerns
 
