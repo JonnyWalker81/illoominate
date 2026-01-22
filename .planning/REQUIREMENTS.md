@@ -139,50 +139,52 @@ Which phases cover which requirements. Updated during roadmap creation.
 | LAND-02 | Phase 1 | Pending |
 | LAND-03 | Phase 1 | Pending |
 | LAND-04 | Phase 1 | Pending |
-| AUTH-01 | Phase 2 | Pending |
-| AUTH-02 | Phase 2 | Pending |
-| AUTH-03 | Phase 2 | Pending |
-| AUTH-04 | Phase 2 | Pending |
-| AUTH-05 | Phase 2 | Pending |
-| WORK-01 | Phase 2 | Pending |
-| WORK-02 | Phase 2 | Pending |
-| WORK-03 | Phase 2 | Pending |
-| WORK-04 | Phase 2 | Pending |
-| SUBM-01 | Phase 3 | Pending |
-| SUBM-02 | Phase 3 | Pending |
-| SUBM-03 | Phase 3 | Pending |
-| SUBM-04 | Phase 3 | Pending |
-| ORG-01 | Phase 4 | Pending |
-| ORG-02 | Phase 4 | Pending |
-| ORG-03 | Phase 4 | Pending |
-| ORG-04 | Phase 4 | Pending |
-| ORG-05 | Phase 4 | Pending |
-| VOTE-01 | Phase 5 | Pending |
-| VOTE-02 | Phase 5 | Pending |
-| VOTE-03 | Phase 5 | Pending |
-| VOTE-04 | Phase 5 | Pending |
-| ROAD-01 | Phase 6 | Pending |
-| ROAD-02 | Phase 6 | Pending |
-| ROAD-03 | Phase 6 | Pending |
-| ROAD-04 | Phase 6 | Pending |
-| NOTF-01 | Phase 7 | Pending |
-| NOTF-02 | Phase 7 | Pending |
-| NOTF-03 | Phase 7 | Pending |
-| NOTF-04 | Phase 7 | Pending |
-| IOS-01 | Phase 8 | Pending |
-| IOS-02 | Phase 8 | Pending |
-| IOS-03 | Phase 8 | Pending |
-| IOS-04 | Phase 8 | Pending |
-| WEB-01 | Phase 9 | Pending |
-| WEB-02 | Phase 9 | Pending |
-| WEB-03 | Phase 9 | Pending |
-| WEB-04 | Phase 9 | Pending |
+| AUTH-01 | Phase 3 | Pending |
+| AUTH-02 | Phase 3 | Pending |
+| AUTH-03 | Phase 3 | Pending |
+| AUTH-04 | Phase 3 | Pending |
+| AUTH-05 | Phase 3 | Pending |
+| WORK-01 | Phase 4 | Pending |
+| WORK-02 | Phase 4 | Pending |
+| WORK-03 | Phase 4 | Pending |
+| WORK-04 | Phase 4 | Pending |
+| SUBM-01 | Phase 7 | Pending |
+| SUBM-02 | Phase 7 | Pending |
+| SUBM-03 | Phase 7 | Pending |
+| SUBM-04 | Phase 7 | Pending |
+| ORG-01 | Phase 8 | Pending |
+| ORG-02 | Phase 8 | Pending |
+| ORG-03 | Phase 8 | Pending |
+| ORG-04 | Phase 8 | Pending |
+| ORG-05 | Phase 8 | Pending |
+| VOTE-01 | Phase 9 | Pending |
+| VOTE-02 | Phase 9 | Pending |
+| VOTE-03 | Phase 9 | Pending |
+| VOTE-04 | Phase 9 | Pending |
+| ROAD-01 | Phase 11 | Pending |
+| ROAD-02 | Phase 11 | Pending |
+| ROAD-03 | Phase 11 | Pending |
+| ROAD-04 | Phase 11 | Pending |
+| NOTF-01 | Phase 12 | Pending |
+| NOTF-02 | Phase 12 | Pending |
+| NOTF-03 | Phase 12 | Pending |
+| NOTF-04 | Phase 12 | Pending |
+| IOS-01 | Phase 10 | Pending |
+| IOS-02 | Phase 10 | Pending |
+| IOS-03 | Phase 10 | Pending |
+| IOS-04 | Phase 10 | Pending |
+| WEB-01 | Phase 13 | Pending |
+| WEB-02 | Phase 13 | Pending |
+| WEB-03 | Phase 13 | Pending |
+| WEB-04 | Phase 13 | Pending |
 
 **Coverage:**
 - v1 requirements: 40 total
 - Mapped to phases: 40
-- Unmapped: 0 ✓
+- Unmapped: 0
+
+**Note:** Phases 2, 5, and 6 are infrastructure phases that enable requirements but don't directly implement any. They provide the foundation (database, API, dashboard) that requirement-implementing phases build upon.
 
 ---
 *Requirements defined: 2026-01-21*
-*Last updated: 2026-01-21 after initial definition*
+*Last updated: 2026-01-21 after roadmap creation (13 phases)*
