@@ -14,8 +14,11 @@ export const waitlist = sqliteTable('waitlist', {
 export const quizResponses = sqliteTable('quiz_responses', {
   id: integer('id').primaryKey({ autoIncrement: true }),
   waitlistId: integer('waitlist_id').references(() => waitlist.id),
+  role: text('role'), // developer, founder, pm, designer, other
   platform: text('platform'),
   teamSize: text('team_size'),
+  disappointmentLevel: text('disappointment_level'), // very, somewhat, not (PMF metric)
   painPoints: text('pain_points'),
+  quizCompleted: integer('quiz_completed').default(0), // 1 if completed, 0 if skipped
   createdAt: text('created_at').notNull(),
 });
