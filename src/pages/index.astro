@@ -3,6 +3,7 @@ import Layout from '../layouts/Layout.astro';
 import Hero from '../components/Hero.astro';
 import Features from '../components/Features.astro';
 import WaitlistForm from '../components/WaitlistForm.astro';
+import QuizModal from '../components/QuizModal.astro';
 ---
 
 <Layout title="Illoominate - Native User Feedback">
@@ -18,6 +19,9 @@ import WaitlistForm from '../components/WaitlistForm.astro';
       </p>
     </footer>
   </main>
+  
+  <!-- Quiz Modal (triggered after waitlist signup) -->
+  <QuizModal />
 </Layout>
 
 <style>

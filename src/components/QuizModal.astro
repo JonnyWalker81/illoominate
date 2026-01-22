@@ -1,0 +1,231 @@
+---
+/**
+ * Post-signup quiz modal
+ * Optional survey to gather user insights
+ */
+---
+
+<div id="quiz-modal" class="hidden fixed inset-0 z-50">
+  <!-- Backdrop -->
+  <div 
+    class="absolute inset-0 bg-black/70 backdrop-blur-sm" 
+    data-close-modal
+  ></div>
+
+  <!-- Modal content -->
+  <div class="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-md p-6">
+    <div class="bg-[#111] border border-zinc-800 rounded-2xl p-8 relative animate-in fade-in zoom-in duration-200">
+      <!-- Close button -->
+      <button 
+        class="absolute top-4 right-4 text-zinc-500 hover:text-white transition-colors"
+        data-close-modal
+      >
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+        </svg>
+      </button>
+
+      <!-- Header -->
+      <div class="text-center mb-8">
+        <h2 class="text-2xl font-bold text-white mb-2">Help us build better</h2>
+        <p class="text-zinc-400 text-sm">Optional • Takes 30 seconds</p>
+      </div>
+
+      <!-- Form -->
+      <form id="quiz-form" class="space-y-6">
+        <input type="hidden" id="quiz-waitlist-id" name="waitlistId" />
+
+        <!-- Platform question -->
+        <fieldset>
+          <legend class="text-sm font-medium text-zinc-300 mb-3">
+            What platforms do you build for?
+          </legend>
+          <div class="grid grid-cols-2 gap-2">
+            <label class="quiz-option">
+              <input type="radio" name="platform" value="ios" class="sr-only peer" />
+              <span class="block px-4 py-2.5 rounded-lg border border-zinc-700 text-sm text-zinc-400 text-center cursor-pointer transition-all peer-checked:border-indigo-500 peer-checked:text-indigo-400 peer-checked:bg-indigo-500/10 hover:border-zinc-600">
+                iOS
+              </span>
+            </label>
+            <label class="quiz-option">
+              <input type="radio" name="platform" value="android" class="sr-only peer" />
+              <span class="block px-4 py-2.5 rounded-lg border border-zinc-700 text-sm text-zinc-400 text-center cursor-pointer transition-all peer-checked:border-indigo-500 peer-checked:text-indigo-400 peer-checked:bg-indigo-500/10 hover:border-zinc-600">
+                Android
+              </span>
+            </label>
+            <label class="quiz-option">
+              <input type="radio" name="platform" value="web" class="sr-only peer" />
+              <span class="block px-4 py-2.5 rounded-lg border border-zinc-700 text-sm text-zinc-400 text-center cursor-pointer transition-all peer-checked:border-indigo-500 peer-checked:text-indigo-400 peer-checked:bg-indigo-500/10 hover:border-zinc-600">
+                Web
+              </span>
+            </label>
+            <label class="quiz-option">
+              <input type="radio" name="platform" value="multiple" class="sr-only peer" />
+              <span class="block px-4 py-2.5 rounded-lg border border-zinc-700 text-sm text-zinc-400 text-center cursor-pointer transition-all peer-checked:border-indigo-500 peer-checked:text-indigo-400 peer-checked:bg-indigo-500/10 hover:border-zinc-600">
+                Multiple
+              </span>
+            </label>
+          </div>
+        </fieldset>
+
+        <!-- Team size question -->
+        <fieldset>
+          <legend class="text-sm font-medium text-zinc-300 mb-3">
+            Team size?
+          </legend>
+          <div class="grid grid-cols-4 gap-2">
+            <label class="quiz-option">
+              <input type="radio" name="teamSize" value="solo" class="sr-only peer" />
+              <span class="block px-3 py-2.5 rounded-lg border border-zinc-700 text-sm text-zinc-400 text-center cursor-pointer transition-all peer-checked:border-indigo-500 peer-checked:text-indigo-400 peer-checked:bg-indigo-500/10 hover:border-zinc-600">
+                Solo
+              </span>
+            </label>
+            <label class="quiz-option">
+              <input type="radio" name="teamSize" value="small" class="sr-only peer" />
+              <span class="block px-3 py-2.5 rounded-lg border border-zinc-700 text-sm text-zinc-400 text-center cursor-pointer transition-all peer-checked:border-indigo-500 peer-checked:text-indigo-400 peer-checked:bg-indigo-500/10 hover:border-zinc-600">
+                2-5
+              </span>
+            </label>
+            <label class="quiz-option">
+              <input type="radio" name="teamSize" value="medium" class="sr-only peer" />
+              <span class="block px-3 py-2.5 rounded-lg border border-zinc-700 text-sm text-zinc-400 text-center cursor-pointer transition-all peer-checked:border-indigo-500 peer-checked:text-indigo-400 peer-checked:bg-indigo-500/10 hover:border-zinc-600">
+                6-20
+              </span>
+            </label>
+            <label class="quiz-option">
+              <input type="radio" name="teamSize" value="large" class="sr-only peer" />
+              <span class="block px-3 py-2.5 rounded-lg border border-zinc-700 text-sm text-zinc-400 text-center cursor-pointer transition-all peer-checked:border-indigo-500 peer-checked:text-indigo-400 peer-checked:bg-indigo-500/10 hover:border-zinc-600">
+                20+
+              </span>
+            </label>
+          </div>
+        </fieldset>
+
+        <!-- Pain points -->
+        <div>
+          <label for="painPoints" class="text-sm font-medium text-zinc-300 mb-3 block">
+            What's your biggest feedback collection challenge?
+          </label>
+          <textarea 
+            id="painPoints"
+            name="painPoints" 
+            rows="3" 
+            placeholder="Optional..."
+            class="w-full bg-[#0a0a0a] border border-zinc-700 rounded-lg px-4 py-3 text-white placeholder-zinc-600 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-colors outline-none resize-none text-sm"
+          ></textarea>
+        </div>
+
+        <!-- Actions -->
+        <div class="flex justify-between items-center pt-2">
+          <button 
+            type="button" 
+            class="text-zinc-500 hover:text-zinc-300 text-sm transition-colors" 
+            data-close-modal
+          >
+            Skip
+          </button>
+          <button 
+            type="submit"
+            id="quiz-submit-btn"
+            class="px-6 py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white font-medium rounded-lg transition-all hover:translate-y-[-1px]"
+          >
+            Submit
+          </button>
+        </div>
+      </form>
+
+      <!-- Success state -->
+      <div id="quiz-success" class="hidden text-center py-8">
+        <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-emerald-500/20 flex items-center justify-center">
+          <svg class="w-8 h-8 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+          </svg>
+        </div>
+        <h3 class="text-xl font-semibold text-white mb-2">Thanks for your feedback!</h3>
+        <p class="text-zinc-400 text-sm">This helps us build a better product for you.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  @keyframes fade-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  
+  @keyframes zoom-in {
+    from { transform: scale(0.95); }
+    to { transform: scale(1); }
+  }
+  
+  .animate-in {
+    animation: fade-in 0.2s ease-out, zoom-in 0.2s ease-out;
+  }
+</style>
+
+<script>
+  const modal = document.getElementById('quiz-modal') as HTMLDivElement;
+  const form = document.getElementById('quiz-form') as HTMLFormElement;
+  const waitlistIdInput = document.getElementById('quiz-waitlist-id') as HTMLInputElement;
+  const submitBtn = document.getElementById('quiz-submit-btn') as HTMLButtonElement;
+  const successState = document.getElementById('quiz-success') as HTMLDivElement;
+
+  // Open modal when event dispatched from WaitlistForm
+  window.addEventListener('open-quiz', ((e: CustomEvent<{ waitlistId: number }>) => {
+    waitlistIdInput.value = e.detail.waitlistId.toString();
+    modal.classList.remove('hidden');
+    document.body.style.overflow = 'hidden';
+  }) as EventListener);
+
+  // Close modal
+  const closeModal = () => {
+    modal.classList.add('hidden');
+    document.body.style.overflow = '';
+  };
+
+  modal.querySelectorAll('[data-close-modal]').forEach(el => {
+    el.addEventListener('click', closeModal);
+  });
+
+  // Close on escape key
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
+      closeModal();
+    }
+  });
+
+  // Form submission
+  form?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Submitting...';
+
+    try {
+      const formData = new FormData(form);
+      
+      const response = await fetch('/api/quiz', {
+        method: 'POST',
+        body: formData,
+      });
+
+      const data = await response.json() as { success: boolean; error?: string };
+
+      if (data.success) {
+        // Show success state
+        form.classList.add('hidden');
+        successState.classList.remove('hidden');
+        
+        // Auto-close after 2 seconds
+        setTimeout(closeModal, 2000);
+      } else {
+        throw new Error(data.error || 'Something went wrong');
+      }
+    } catch (err) {
+      console.error('Quiz submission error:', err);
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Submit';
+    }
+  });
+</script>
