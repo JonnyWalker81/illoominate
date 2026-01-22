@@ -35,12 +35,13 @@ Illoominate delivers a native-first user feedback platform for indie developers 
   2. Visitor can enter email and submit to join waitlist
   3. Visitor receives confirmation email after signup
   4. Admin can access dashboard to view and export waitlist entries
-**Plans**: TBD
+**Plans**: 4 plans
 
 Plans:
-- [ ] 01-01: CloudFlare infrastructure setup (Pages, Workers, D1)
-- [ ] 01-02: Landing page design and content
-- [ ] 01-03: Waitlist API and admin dashboard
+- [ ] 01-01-PLAN.md — Infrastructure setup (Astro + Workers + D1 + Drizzle)
+- [ ] 01-02-PLAN.md — Landing page frontend (Hero, Features, Waitlist form)
+- [ ] 01-03-PLAN.md — Waitlist API and email confirmation
+- [ ] 01-04-PLAN.md — Quiz modal and admin dashboard
 
 ### Phase 2: Foundation
 **Goal**: Multi-tenant database schema with proper isolation exists
@@ -246,7 +247,7 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> ... -> 13
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Landing Page | 0/3 | Not started | - |
+| 1. Landing Page | 0/4 | Planned | - |
 | 2. Foundation | 0/2 | Not started | - |
 | 3. Authentication | 0/3 | Not started | - |
 | 4. Workspace & Apps | 0/3 | Not started | - |
@@ -262,4 +263,5 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> ... -> 13
 
 ---
 *Roadmap created: 2026-01-21*
-*Total phases: 13 | Total plans: 41 (estimated)*
+*Phase 1 planned: 2026-01-21*
+*Total phases: 13 | Total plans: 42 (estimated)*
