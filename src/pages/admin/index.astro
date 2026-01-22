@@ -1,0 +1,301 @@
+---
+export const prerender = false;
+import Layout from '../../layouts/Layout.astro';
+---
+
+<Layout title="Admin - Illoominate">
+  <main class="min-h-screen bg-[#0a0a0a] p-8">
+    <!-- Auth form (shown if no token) -->
+    <div id="auth-section" class="max-w-md mx-auto pt-20">
+      <div class="text-center mb-8">
+        <h1 class="text-3xl font-bold text-white mb-2">Admin Access</h1>
+        <p class="text-zinc-500">Enter your admin token to continue</p>
+      </div>
+      <form id="auth-form" class="space-y-4">
+        <input 
+          type="password" 
+          name="token" 
+          placeholder="Enter admin token"
+          class="w-full bg-[#111] border border-zinc-800 rounded-xl px-4 py-3.5 text-white placeholder-zinc-600 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-colors outline-none"
+          autofocus
+        />
+        <button 
+          type="submit"
+          class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-semibold py-3.5 rounded-xl transition-all"
+        >
+          Access Dashboard
+        </button>
+        <p id="auth-error" class="hidden text-red-400 text-sm text-center"></p>
+      </form>
+    </div>
+
+    <!-- Dashboard (hidden until authenticated) -->
+    <div id="dashboard" class="hidden max-w-6xl mx-auto">
+      <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
+        <div>
+          <h1 class="text-3xl font-bold text-white">Waitlist Dashboard</h1>
+          <p class="text-zinc-500">
+            <span id="total-count">0</span> total signups
+          </p>
+        </div>
+        <div class="flex flex-wrap gap-3">
+          <input 
+            type="text" 
+            id="search" 
+            placeholder="Search by email or name..."
+            class="bg-[#111] border border-zinc-800 rounded-lg px-4 py-2 text-white placeholder-zinc-600 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-colors outline-none w-64"
+          />
+          <button 
+            id="export-btn"
+            class="px-4 py-2 bg-zinc-800 hover:bg-zinc-700 text-white rounded-lg transition-colors flex items-center gap-2"
+          >
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+            </svg>
+            Export CSV
+          </button>
+          <button 
+            id="logout-btn"
+            class="px-4 py-2 text-zinc-500 hover:text-white transition-colors"
+          >
+            Logout
+          </button>
+        </div>
+      </div>
+
+      <!-- Stats row -->
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+        <div class="bg-[#111] border border-zinc-800 rounded-xl p-4">
+          <p class="text-zinc-500 text-sm mb-1">Total Signups</p>
+          <p id="stat-total" class="text-2xl font-bold text-white">0</p>
+        </div>
+        <div class="bg-[#111] border border-zinc-800 rounded-xl p-4">
+          <p class="text-zinc-500 text-sm mb-1">With Referrals</p>
+          <p id="stat-referrals" class="text-2xl font-bold text-indigo-400">0</p>
+        </div>
+        <div class="bg-[#111] border border-zinc-800 rounded-xl p-4">
+          <p class="text-zinc-500 text-sm mb-1">Quiz Completed</p>
+          <p id="stat-quiz" class="text-2xl font-bold text-emerald-400">0</p>
+        </div>
+        <div class="bg-[#111] border border-zinc-800 rounded-xl p-4">
+          <p class="text-zinc-500 text-sm mb-1">Today</p>
+          <p id="stat-today" class="text-2xl font-bold text-white">0</p>
+        </div>
+      </div>
+
+      <!-- Table -->
+      <div class="bg-[#111] border border-zinc-800 rounded-xl overflow-hidden">
+        <div class="overflow-x-auto">
+          <table class="w-full">
+            <thead class="text-left text-zinc-500 border-b border-zinc-800 text-sm">
+              <tr>
+                <th class="px-4 py-3 font-medium">#</th>
+                <th class="px-4 py-3 font-medium">Email</th>
+                <th class="px-4 py-3 font-medium">Name</th>
+                <th class="px-4 py-3 font-medium">Referrals</th>
+                <th class="px-4 py-3 font-medium">Source</th>
+                <th class="px-4 py-3 font-medium">Date</th>
+                <th class="px-4 py-3 font-medium">Quiz</th>
+              </tr>
+            </thead>
+            <tbody id="entries-table" class="text-sm">
+              <!-- Populated by JS -->
+            </tbody>
+          </table>
+        </div>
+        
+        <!-- Empty state -->
+        <div id="empty-state" class="hidden py-12 text-center">
+          <p class="text-zinc-500">No entries found</p>
+        </div>
+        
+        <!-- Loading state -->
+        <div id="loading-state" class="hidden py-12 text-center">
+          <svg class="animate-spin w-8 h-8 mx-auto text-indigo-400" fill="none" viewBox="0 0 24 24">
+            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </main>
+</Layout>
+
+<script>
+  interface WaitlistEntry {
+    position: number;
+    email: string;
+    name: string | null;
+    source: string | null;
+    referralCode: string;
+    referredBy: string | null;
+    referralCount: number | null;
+    createdAt: string;
+    quiz: {
+      platform: string | null;
+      teamSize: string | null;
+      painPoints: string | null;
+    } | null;
+  }
+
+  const authSection = document.getElementById('auth-section') as HTMLDivElement;
+  const authForm = document.getElementById('auth-form') as HTMLFormElement;
+  const authError = document.getElementById('auth-error') as HTMLParagraphElement;
+  const dashboard = document.getElementById('dashboard') as HTMLDivElement;
+  const totalCount = document.getElementById('total-count') as HTMLSpanElement;
+  const searchInput = document.getElementById('search') as HTMLInputElement;
+  const exportBtn = document.getElementById('export-btn') as HTMLButtonElement;
+  const logoutBtn = document.getElementById('logout-btn') as HTMLButtonElement;
+  const entriesTable = document.getElementById('entries-table') as HTMLTableSectionElement;
+  const emptyState = document.getElementById('empty-state') as HTMLDivElement;
+  const loadingState = document.getElementById('loading-state') as HTMLDivElement;
+  
+  // Stats
+  const statTotal = document.getElementById('stat-total') as HTMLParagraphElement;
+  const statReferrals = document.getElementById('stat-referrals') as HTMLParagraphElement;
+  const statQuiz = document.getElementById('stat-quiz') as HTMLParagraphElement;
+  const statToday = document.getElementById('stat-today') as HTMLParagraphElement;
+
+  let entries: WaitlistEntry[] = [];
+  let token: string | null = localStorage.getItem('admin_token');
+
+  // Check if already authenticated
+  if (token) {
+    loadDashboard();
+  }
+
+  // Auth form submission
+  authForm?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const formData = new FormData(authForm);
+    token = formData.get('token') as string;
+    
+    if (token) {
+      localStorage.setItem('admin_token', token);
+      await loadDashboard();
+    }
+  });
+
+  // Load dashboard data
+  async function loadDashboard() {
+    authSection.classList.add('hidden');
+    dashboard.classList.remove('hidden');
+    loadingState.classList.remove('hidden');
+    
+    try {
+      const response = await fetch('/api/admin/waitlist', {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+        },
+      });
+
+      if (response.status === 401) {
+        // Invalid token
+        localStorage.removeItem('admin_token');
+        token = null;
+        authSection.classList.remove('hidden');
+        dashboard.classList.add('hidden');
+        authError.textContent = 'Invalid token. Please try again.';
+        authError.classList.remove('hidden');
+        return;
+      }
+
+      const data = await response.json() as { entries: WaitlistEntry[]; total: number };
+      entries = data.entries;
+      
+      // Update stats
+      const today = new Date().toISOString().split('T')[0];
+      const todayCount = entries.filter(e => e.createdAt.startsWith(today)).length;
+      const referralCount = entries.filter(e => (e.referralCount ?? 0) > 0).length;
+      const quizCount = entries.filter(e => e.quiz !== null).length;
+      
+      totalCount.textContent = data.total.toString();
+      statTotal.textContent = data.total.toString();
+      statReferrals.textContent = referralCount.toString();
+      statQuiz.textContent = quizCount.toString();
+      statToday.textContent = todayCount.toString();
+
+      renderTable(entries);
+    } catch (error) {
+      console.error('Failed to load dashboard:', error);
+    } finally {
+      loadingState.classList.add('hidden');
+    }
+  }
+
+  // Render table
+  function renderTable(data: WaitlistEntry[]) {
+    if (data.length === 0) {
+      entriesTable.innerHTML = '';
+      emptyState.classList.remove('hidden');
+      return;
+    }
+
+    emptyState.classList.add('hidden');
+    entriesTable.innerHTML = data.map(entry => `
+      <tr class="border-b border-zinc-800/50 hover:bg-zinc-800/30 transition-colors">
+        <td class="px-4 py-3 text-zinc-400">${entry.position}</td>
+        <td class="px-4 py-3 text-white font-medium">${entry.email}</td>
+        <td class="px-4 py-3 text-zinc-400">${entry.name || '-'}</td>
+        <td class="px-4 py-3">
+          ${(entry.referralCount ?? 0) > 0 
+            ? `<span class="text-indigo-400 font-medium">${entry.referralCount}</span>` 
+            : '<span class="text-zinc-600">0</span>'
+          }
+        </td>
+        <td class="px-4 py-3 text-zinc-500 text-xs">${entry.source || '-'}</td>
+        <td class="px-4 py-3 text-zinc-500 text-xs">${new Date(entry.createdAt).toLocaleDateString()}</td>
+        <td class="px-4 py-3">
+          ${entry.quiz 
+            ? '<span class="inline-block w-2 h-2 rounded-full bg-emerald-400" title="Quiz completed"></span>' 
+            : '<span class="inline-block w-2 h-2 rounded-full bg-zinc-700"></span>'
+          }
+        </td>
+      </tr>
+    `).join('');
+  }
+
+  // Search functionality
+  searchInput?.addEventListener('input', () => {
+    const query = searchInput.value.toLowerCase();
+    const filtered = entries.filter(e => 
+      e.email.toLowerCase().includes(query) ||
+      (e.name?.toLowerCase().includes(query))
+    );
+    renderTable(filtered);
+  });
+
+  // Export CSV
+  exportBtn?.addEventListener('click', async () => {
+    window.location.href = `/api/admin/waitlist?format=csv&token=${encodeURIComponent(token || '')}`;
+    
+    // Actually use auth header
+    const response = await fetch('/api/admin/waitlist?format=csv', {
+      headers: {
+        'Authorization': `Bearer ${token}`,
+      },
+    });
+    
+    if (response.ok) {
+      const blob = await response.blob();
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `waitlist-${new Date().toISOString().split('T')[0]}.csv`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    }
+  });
+
+  // Logout
+  logoutBtn?.addEventListener('click', () => {
+    localStorage.removeItem('admin_token');
+    token = null;
+    authSection.classList.remove('hidden');
+    dashboard.classList.add('hidden');
+    authError.classList.add('hidden');
+    (authForm.querySelector('input') as HTMLInputElement).value = '';
+  });
+</script>
