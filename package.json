@@ -1,0 +1,36 @@
+{
+  "name": "illoominate",
+  "version": "1.0.0",
+  "description": "Native-first user feedback platform for indie developers",
+  "type": "module",
+  "scripts": {
+    "dev": "wrangler dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "wrangler d1 migrations apply illoominate-waitlist --local",
+    "db:migrate:prod": "wrangler d1 migrations apply illoominate-waitlist --remote"
+  },
+  "keywords": ["feedback", "native-sdk", "startup"],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@astrojs/cloudflare": "^12.6.12",
+    "@react-email/components": "^1.0.6",
+    "astro": "^5.16.14",
+    "drizzle-orm": "^0.45.1",
+    "hono": "^4.11.5",
+    "resend": "^6.8.0",
+    "zod": "^3.25.76"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20260122.0",
+    "@hono/zod-validator": "^0.7.6",
+    "@tailwindcss/vite": "^4.1.18",
+    "drizzle-kit": "^0.31.8",
+    "tailwindcss": "^4.1.18",
+    "typescript": "^5.9.3",
+    "wrangler": "^4.60.0"
+  }
+}
