@@ -53,11 +53,11 @@ Plans:
   2. Database schema includes workspaces, apps, users, feedback, and all supporting tables
   3. Row Level Security policies enforce workspace isolation (cross-tenant queries return empty)
   4. Database migrations are version-controlled and reproducible
-**Plans**: TBD
+**Plans**: 2 plans
 
 Plans:
-- [ ] 02-01: Supabase project setup and configuration
-- [ ] 02-02: Core database schema with RLS policies
+- [ ] 02-01-PLAN.md — Supabase CLI initialization and project structure
+- [ ] 02-02-PLAN.md — Core schema with 10 tables and RLS policies
 
 ### Phase 3: Authentication
 **Goal**: Users can securely create accounts and sign in
