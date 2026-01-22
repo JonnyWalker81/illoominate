@@ -61,6 +61,7 @@ export const POST: APIRoute = async ({ request, locals }) => {
         success: true,
         position,
         referralCode: existing[0].referralCode,
+        waitlistId: existing[0].id,
         message: 'You are already on the waitlist!',
       }), {
         status: 200,
