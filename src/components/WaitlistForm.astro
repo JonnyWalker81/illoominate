@@ -1,0 +1,232 @@
+---
+/**
+ * Waitlist signup form with success state
+ * Linear/Vercel inspired dark form design
+ */
+---
+
+<section id="waitlist" class="relative py-24 overflow-hidden">
+  <!-- Background -->
+  <div class="absolute inset-0 bg-gradient-to-b from-[#0a0a0a] via-[#0d0d12] to-[#0a0a0a]"></div>
+  
+  <div class="relative z-10 max-w-md mx-auto px-6">
+    <!-- Section header -->
+    <div class="text-center mb-10">
+      <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">
+        Get early access
+      </h2>
+      <p class="text-zinc-400">
+        Join the waitlist for beta access and launch pricing.
+      </p>
+    </div>
+
+    <!-- Form -->
+    <form id="waitlist-form" class="space-y-4">
+      <!-- Email -->
+      <div>
+        <label for="email" class="sr-only">Email address</label>
+        <input 
+          type="email" 
+          id="email"
+          name="email" 
+          required
+          placeholder="you@company.com"
+          class="w-full bg-[#111] border border-zinc-800 rounded-xl px-4 py-3.5 text-white placeholder-zinc-600 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-colors outline-none"
+        />
+      </div>
+
+      <!-- Name (optional) -->
+      <div>
+        <label for="name" class="sr-only">Name (optional)</label>
+        <input 
+          type="text" 
+          id="name"
+          name="name" 
+          placeholder="Name (optional)"
+          class="w-full bg-[#111] border border-zinc-800 rounded-xl px-4 py-3.5 text-white placeholder-zinc-600 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-colors outline-none"
+        />
+      </div>
+
+      <!-- Source -->
+      <div>
+        <label for="source" class="sr-only">How did you hear about us?</label>
+        <select 
+          id="source"
+          name="source"
+          class="w-full bg-[#111] border border-zinc-800 rounded-xl px-4 py-3.5 text-zinc-400 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-colors outline-none appearance-none cursor-pointer"
+          style="background-image: url('data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 fill=%27none%27 viewBox=%270 0 24 24%27 stroke=%27%2371717a%27%3E%3Cpath stroke-linecap=%27round%27 stroke-linejoin=%27round%27 stroke-width=%272%27 d=%27M19 9l-7 7-7-7%27/%3E%3C/svg%3E'); background-position: right 1rem center; background-repeat: no-repeat; background-size: 1.25rem;"
+        >
+          <option value="">How did you hear about us? (optional)</option>
+          <option value="twitter">Twitter/X</option>
+          <option value="hacker-news">Hacker News</option>
+          <option value="reddit">Reddit</option>
+          <option value="friend">Friend or colleague</option>
+          <option value="search">Search engine</option>
+          <option value="other">Other</option>
+        </select>
+      </div>
+
+      <!-- Referral code (hidden, populated from URL) -->
+      <input type="hidden" id="referredBy" name="referredBy" />
+
+      <!-- Submit button -->
+      <button 
+        type="submit"
+        id="submit-btn"
+        class="w-full bg-indigo-600 hover:bg-indigo-500 disabled:bg-indigo-600/50 disabled:cursor-not-allowed text-white font-semibold py-3.5 rounded-xl transition-all duration-200 hover:translate-y-[-1px] hover:shadow-[0_0_30px_rgba(99,102,241,0.3)] flex items-center justify-center gap-2"
+      >
+        <span id="btn-text">Join Waitlist</span>
+        <svg id="btn-spinner" class="hidden animate-spin w-5 h-5" fill="none" viewBox="0 0 24 24">
+          <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+          <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+        </svg>
+      </button>
+
+      <!-- Error message -->
+      <p id="error-message" class="hidden text-red-400 text-sm text-center"></p>
+    </form>
+
+    <!-- Success state -->
+    <div id="success-state" class="hidden text-center">
+      <!-- Position number -->
+      <div class="mb-6">
+        <div class="text-7xl font-bold text-indigo-400 mb-2">
+          #<span id="position">--</span>
+        </div>
+        <p class="text-xl text-white font-medium">You're on the list!</p>
+        <p class="text-zinc-500 mt-1">We'll notify you when it's your turn.</p>
+      </div>
+
+      <!-- Referral code -->
+      <div class="p-6 rounded-2xl bg-[#111] border border-zinc-800 mb-6">
+        <p class="text-sm text-zinc-400 mb-3">Share your code to move up:</p>
+        <div class="flex items-center justify-center gap-3">
+          <code id="referral-code" class="text-2xl font-mono font-bold text-indigo-400 tracking-wider">------</code>
+          <button 
+            id="copy-btn"
+            class="p-2 rounded-lg bg-zinc-800 hover:bg-zinc-700 transition-colors"
+            title="Copy referral code"
+          >
+            <svg id="copy-icon" class="w-5 h-5 text-zinc-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
+            </svg>
+            <svg id="check-icon" class="hidden w-5 h-5 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+            </svg>
+          </button>
+        </div>
+        <p class="text-xs text-zinc-600 mt-3">Each friend who joins moves you up the list</p>
+      </div>
+
+      <!-- Quiz CTA -->
+      <button 
+        id="quiz-btn"
+        class="text-indigo-400 hover:text-indigo-300 text-sm font-medium transition-colors"
+      >
+        Help us build better (optional 30-sec survey) →
+      </button>
+    </div>
+  </div>
+</section>
+
+<script>
+  // Check for referral code in URL
+  const urlParams = new URLSearchParams(window.location.search);
+  const referralParam = urlParams.get('ref');
+  if (referralParam) {
+    const referredByInput = document.getElementById('referredBy') as HTMLInputElement;
+    if (referredByInput) {
+      referredByInput.value = referralParam.toUpperCase();
+    }
+  }
+
+  const form = document.getElementById('waitlist-form') as HTMLFormElement;
+  const successState = document.getElementById('success-state') as HTMLDivElement;
+  const submitBtn = document.getElementById('submit-btn') as HTMLButtonElement;
+  const btnText = document.getElementById('btn-text') as HTMLSpanElement;
+  const btnSpinner = document.getElementById('btn-spinner') as HTMLElement;
+  const errorMessage = document.getElementById('error-message') as HTMLParagraphElement;
+  const positionEl = document.getElementById('position') as HTMLSpanElement;
+  const referralCodeEl = document.getElementById('referral-code') as HTMLElement;
+  const copyBtn = document.getElementById('copy-btn') as HTMLButtonElement;
+  const copyIcon = document.getElementById('copy-icon') as HTMLElement;
+  const checkIcon = document.getElementById('check-icon') as HTMLElement;
+  const quizBtn = document.getElementById('quiz-btn') as HTMLButtonElement;
+
+  // Store waitlistId for quiz
+  let waitlistId: number | null = null;
+
+  form?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    
+    // Reset error state
+    errorMessage.classList.add('hidden');
+    
+    // Show loading state
+    submitBtn.disabled = true;
+    btnText.textContent = 'Joining...';
+    btnSpinner.classList.remove('hidden');
+
+    try {
+      const formData = new FormData(form);
+      
+      const response = await fetch('/api/waitlist', {
+        method: 'POST',
+        body: formData,
+      });
+
+      const data = await response.json() as { 
+        success: boolean; 
+        position?: number; 
+        referralCode?: string; 
+        waitlistId?: number;
+        error?: string;
+      };
+
+      if (data.success && data.position && data.referralCode) {
+        // Show success state
+        form.classList.add('hidden');
+        successState.classList.remove('hidden');
+        positionEl.textContent = data.position.toString();
+        referralCodeEl.textContent = data.referralCode;
+        waitlistId = data.waitlistId ?? null;
+        
+        // Smooth scroll to success state
+        successState.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      } else {
+        throw new Error(data.error || 'Something went wrong');
+      }
+    } catch (err) {
+      const message = err instanceof Error ? err.message : 'Something went wrong. Please try again.';
+      errorMessage.textContent = message;
+      errorMessage.classList.remove('hidden');
+      
+      // Reset button
+      submitBtn.disabled = false;
+      btnText.textContent = 'Join Waitlist';
+      btnSpinner.classList.add('hidden');
+    }
+  });
+
+  // Copy referral code
+  copyBtn?.addEventListener('click', async () => {
+    const code = referralCodeEl.textContent;
+    if (code) {
+      await navigator.clipboard.writeText(code);
+      copyIcon.classList.add('hidden');
+      checkIcon.classList.remove('hidden');
+      
+      setTimeout(() => {
+        copyIcon.classList.remove('hidden');
+        checkIcon.classList.add('hidden');
+      }, 2000);
+    }
+  });
+
+  // Quiz button - dispatch event for quiz modal
+  quizBtn?.addEventListener('click', () => {
+    if (waitlistId) {
+      window.dispatchEvent(new CustomEvent('open-quiz', { detail: { waitlistId } }));
+    }
+  });
+</script>
