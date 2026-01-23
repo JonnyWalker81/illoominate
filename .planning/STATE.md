@@ -53,7 +53,7 @@ Recent decisions affecting current work:
 
 ### Pending Todos
 
-1 pending — `/gsd:check-todos` to review
+None — all todos resolved or in progress
 
 ### Blockers/Concerns
 
