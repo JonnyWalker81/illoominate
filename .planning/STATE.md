@@ -5,14 +5,14 @@
 See: .planning/PROJECT.md (updated 2026-01-21)
 
 **Core value:** Native-feeling feedback submission with transparent, startup-friendly pricing
-**Current focus:** Phase 1 complete, ready for Phase 2
+**Current focus:** Phase 1 deployed to production, ready for Phase 2
 
 ## Current Position
 
-Phase: 1 of 13 (Landing Page) ✓ COMPLETE
+Phase: 1 of 13 (Landing Page) ✓ COMPLETE & DEPLOYED
 Plan: Ready for Phase 2 planning
-Status: Phase 1 verified and complete
-Last activity: 2026-01-22 — Phase 1 completion verified
+Status: Phase 1 live at https://illoominate.app
+Last activity: 2026-01-22 — Production deployment complete
 
 Progress: [█░░░░░░░░░] ~8% (1/13 phases)
 
@@ -48,6 +48,8 @@ Recent decisions affecting current work:
 - [01-05]: PMF question determines quiz completion (required for position boost)
 - [01-05]: Position boost via referral_count increment (+5)
 - [01-05]: Plain CSS over @apply for Tailwind v4 compatibility
+- [Deploy]: CloudFlare Workers (not Pages) for deployment - Pages had issues with _worker.js directory format
+- [Deploy]: Email from address: noreply@illoominate.app
 
 ### Pending Todos
 
@@ -60,19 +62,36 @@ None.
 ## Session Continuity
 
 Last session: 2026-01-22
-Stopped at: Phase 1 complete
+Stopped at: Phase 1 deployed to production
 Resume file: None
 Next action: Start Phase 2 planning (`/gsd/plan-phase 2`)
 
-## Phase 1 Summary (COMPLETE)
+## Phase 1 Summary (COMPLETE & DEPLOYED)
 
-Phase 1 (Landing Page) completed 2026-01-22 with:
-- Astro + Cloudflare Workers + D1 infrastructure
+Phase 1 (Landing Page) completed and deployed 2026-01-22:
+
+**Live URL:** https://illoominate.app
+**Admin Dashboard:** https://illoominate.app/admin
+**Admin Token:** 6wBtvoaoBVp9FXDU4PXsSv0QvoOYpEsc
+
+**Infrastructure:**
+- Astro + CloudFlare Workers + D1 database
+- Resend for transactional email (domain: illoominate.app)
+- GitHub repo: github.com/JonnyWalker81/illoominate
+
+**Features:**
 - Landing page with Hero, Features, Waitlist sections
 - Waitlist signup with position and referral system
-- Confirmation email via Resend
+- Confirmation email via Resend (from noreply@illoominate.app)
 - 5-step quiz wizard with PMF measurement
 - Admin dashboard with CSV export
+
+**Deployment Commands:**
+```bash
+npm run build
+echo "_worker.js" > dist/.assetsignore
+npx wrangler deploy --domain illoominate.app
+```
 
 **Plans executed:** 5 (01-01 through 01-05)
 **Total duration:** ~1 hour
