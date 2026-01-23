@@ -109,25 +109,18 @@ export const POST: APIRoute = async ({ request, locals }) => {
     const position = await getWaitlistPosition(db, entry.id);
 
     // Send confirmation email
-    console.log('RESEND_API_KEY exists:', !!env.RESEND_API_KEY);
-    console.log('RESEND_API_KEY is placeholder:', env.RESEND_API_KEY === 're_xxxxxxxxxxxx');
     if (env.RESEND_API_KEY && env.RESEND_API_KEY !== 're_xxxxxxxxxxxx') {
       try {
-        console.log('Attempting to send email to:', email);
         const resend = new Resend(env.RESEND_API_KEY);
-        const result = await resend.emails.send({
+        await resend.emails.send({
           from: 'Illoominate <noreply@illoominate.app>',
           to: email,
           subject: `You're #${position} on the Illoominate waitlist!`,
           react: WelcomeEmail({ name: name || undefined, position, referralCode }),
         });
-        console.log('Email send result:', JSON.stringify(result));
       } catch (emailError) {
-        // Log error but don't fail the signup
         console.error('Email send failed:', emailError);
       }
-    } else {
-      console.log('Skipping email - RESEND_API_KEY not configured');
     }
 
     return new Response(JSON.stringify({
