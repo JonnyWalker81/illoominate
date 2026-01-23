@@ -1,3 +1,4 @@
+import * as React from 'react';
 import {
   Body,
   Container,
@@ -55,8 +56,8 @@ export default function WelcomeEmail({
           <Text style={footer}>
             Questions? Reply to this email.
             <br />
-            <Link href="https://illoominate.com" style={link}>
-              illoominate.com
+            <Link href="https://illoominate.app" style={link}>
+              illoominate.app
             </Link>
           </Text>
         </Container>

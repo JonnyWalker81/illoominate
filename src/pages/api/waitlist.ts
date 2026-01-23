@@ -113,7 +113,7 @@ export const POST: APIRoute = async ({ request, locals }) => {
       try {
         const resend = new Resend(env.RESEND_API_KEY);
         await resend.emails.send({
-          from: 'Illoominate <hello@illoominate.com>',
+          from: 'Illoominate <hello@illoominate.app>',
           to: email,
           subject: `You're #${position} on the Illoominate waitlist!`,
           react: WelcomeEmail({ name: name || undefined, position, referralCode }),
