@@ -8,6 +8,9 @@ export const waitlist = sqliteTable('waitlist', {
   referralCode: text('referral_code').notNull().unique(),
   referredBy: text('referred_by'),
   referralCount: integer('referral_count').default(0),
+  verified: integer('verified').default(0),
+  verificationToken: text('verification_token'),
+  verifiedAt: text('verified_at'),
   createdAt: text('created_at').notNull(),
 });
 

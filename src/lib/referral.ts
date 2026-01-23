@@ -17,3 +17,15 @@ export function generateReferralCode(): string {
 export function isValidReferralCode(code: string): boolean {
   return /^[A-HJ-NP-Z2-9]{6}$/.test(code);
 }
+
+/**
+ * Generate a secure verification token (32 characters)
+ */
+export function generateVerificationToken(): string {
+  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  let token = '';
+  for (let i = 0; i < 32; i++) {
+    token += chars[Math.floor(Math.random() * chars.length)];
+  }
+  return token;
+}

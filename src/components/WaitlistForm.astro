@@ -86,7 +86,26 @@
       <p id="error-message" class="hidden text-red-400 text-sm text-center"></p>
     </form>
 
-    <!-- Success state -->
+    <!-- Verification pending state -->
+    <div id="verify-state" class="hidden text-center">
+      <div class="mb-6">
+        <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-indigo-500/20 flex items-center justify-center">
+          <svg class="w-8 h-8 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+          </svg>
+        </div>
+        <p class="text-xl text-white font-medium mb-2">Check your email!</p>
+        <p class="text-zinc-400" id="verify-message">
+          We sent a verification link to your email. Click it to confirm and secure your spot on the waitlist.
+        </p>
+      </div>
+      <p class="text-sm text-zinc-600">
+        Didn't receive it? Check your spam folder or
+        <button id="resend-btn" class="text-indigo-400 hover:text-indigo-300 underline">try again</button>.
+      </p>
+    </div>
+
+    <!-- Success state (after verification) -->
     <div id="success-state" class="hidden text-center">
       <!-- Position number -->
       <div class="mb-6">
@@ -154,27 +173,47 @@
   }
 
   const form = document.getElementById('waitlist-form') as HTMLFormElement;
+  const verifyState = document.getElementById('verify-state') as HTMLDivElement;
   const successState = document.getElementById('success-state') as HTMLDivElement;
   const submitBtn = document.getElementById('submit-btn') as HTMLButtonElement;
   const btnText = document.getElementById('btn-text') as HTMLSpanElement;
   const btnSpinner = document.getElementById('btn-spinner') as HTMLElement;
   const errorMessage = document.getElementById('error-message') as HTMLParagraphElement;
+  const verifyMessage = document.getElementById('verify-message') as HTMLParagraphElement;
   const positionEl = document.getElementById('position') as HTMLSpanElement;
   const referralCodeEl = document.getElementById('referral-code') as HTMLElement;
   const copyBtn = document.getElementById('copy-btn') as HTMLButtonElement;
   const copyIcon = document.getElementById('copy-icon') as HTMLElement;
   const checkIcon = document.getElementById('check-icon') as HTMLElement;
   const quizBtn = document.getElementById('quiz-btn') as HTMLButtonElement;
+  const resendBtn = document.getElementById('resend-btn') as HTMLButtonElement;
 
   // Store waitlistId for quiz
   let waitlistId: number | null = null;
 
+  async function submitWaitlist(formData: FormData) {
+    const response = await fetch('/api/waitlist', {
+      method: 'POST',
+      body: formData,
+    });
+
+    return await response.json() as {
+      success: boolean;
+      verified?: boolean;
+      position?: number;
+      referralCode?: string;
+      waitlistId?: number;
+      message?: string;
+      error?: string;
+    };
+  }
+
   form?.addEventListener('submit', async (e) => {
     e.preventDefault();
-    
+
     // Reset error state
     errorMessage.classList.add('hidden');
-    
+
     // Show loading state
     submitBtn.disabled = true;
     btnText.textContent = 'Joining...';
@@ -182,37 +221,41 @@
 
     try {
       const formData = new FormData(form);
-      
-      const response = await fetch('/api/waitlist', {
-        method: 'POST',
-        body: formData,
-      });
+      const data = await submitWaitlist(formData);
 
-      const data = await response.json() as { 
-        success: boolean; 
-        position?: number; 
-        referralCode?: string; 
-        waitlistId?: number;
-        error?: string;
-      };
-
-      if (data.success && data.position && data.referralCode) {
-        // Show success state
-        form.classList.add('hidden');
-        successState.classList.remove('hidden');
-        positionEl.textContent = data.position.toString();
-        referralCodeEl.textContent = data.referralCode;
+      if (data.success) {
         waitlistId = data.waitlistId ?? null;
-        
-        // Smooth scroll to success state
-        successState.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        
-        // Auto-open quiz modal after 2 seconds for better engagement
-        setTimeout(() => {
-          if (waitlistId) {
-            window.dispatchEvent(new CustomEvent('open-quiz', { detail: { waitlistId } }));
+
+        if (data.verified && data.position && data.referralCode) {
+          // Already verified - show success state with position
+          form.classList.add('hidden');
+          verifyState.classList.add('hidden');
+          successState.classList.remove('hidden');
+          positionEl.textContent = data.position.toString();
+          referralCodeEl.textContent = data.referralCode;
+
+          // Smooth scroll to success state
+          successState.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+          // Auto-open quiz modal after 2 seconds for better engagement
+          setTimeout(() => {
+            if (waitlistId) {
+              window.dispatchEvent(new CustomEvent('open-quiz', { detail: { waitlistId } }));
+            }
+          }, 2000);
+        } else {
+          // Needs verification - show verify state
+          form.classList.add('hidden');
+          successState.classList.add('hidden');
+          verifyState.classList.remove('hidden');
+
+          if (data.message) {
+            verifyMessage.textContent = data.message;
           }
-        }, 2000);
+
+          // Smooth scroll to verify state
+          verifyState.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
       } else {
         throw new Error(data.error || 'Something went wrong');
       }
@@ -220,11 +263,40 @@
       const message = err instanceof Error ? err.message : 'Something went wrong. Please try again.';
       errorMessage.textContent = message;
       errorMessage.classList.remove('hidden');
-      
+
       // Reset button
       submitBtn.disabled = false;
       btnText.textContent = 'Join Waitlist';
       btnSpinner.classList.add('hidden');
+    }
+  });
+
+  // Resend verification email
+  resendBtn?.addEventListener('click', async () => {
+    resendBtn.textContent = 'Sending...';
+    resendBtn.disabled = true;
+
+    try {
+      // Re-submit the form to resend verification
+      const emailInput = document.getElementById('email') as HTMLInputElement;
+      const nameInput = document.getElementById('name') as HTMLInputElement;
+
+      const formData = new FormData();
+      formData.set('email', emailInput?.value || '');
+      formData.set('name', nameInput?.value || '');
+
+      const data = await submitWaitlist(formData);
+
+      if (data.success) {
+        verifyMessage.textContent = 'Verification email resent! Check your inbox.';
+      } else {
+        verifyMessage.textContent = data.error || 'Failed to resend. Please try again.';
+      }
+    } catch (err) {
+      verifyMessage.textContent = 'Failed to resend. Please try again.';
+    } finally {
+      resendBtn.textContent = 'try again';
+      resendBtn.disabled = false;
     }
   });
 

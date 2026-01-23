@@ -64,10 +64,14 @@ import Layout from '../../layouts/Layout.astro';
       </div>
 
       <!-- Stats row -->
-      <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+      <div class="grid grid-cols-2 md:grid-cols-5 gap-4 mb-8">
         <div class="bg-[#111] border border-zinc-800 rounded-xl p-4">
           <p class="text-zinc-500 text-sm mb-1">Total Signups</p>
           <p id="stat-total" class="text-2xl font-bold text-white">0</p>
+        </div>
+        <div class="bg-[#111] border border-zinc-800 rounded-xl p-4">
+          <p class="text-zinc-500 text-sm mb-1">Verified</p>
+          <p id="stat-verified" class="text-2xl font-bold text-emerald-400">0</p>
         </div>
         <div class="bg-[#111] border border-zinc-800 rounded-xl p-4">
           <p class="text-zinc-500 text-sm mb-1">With Referrals</p>
@@ -75,7 +79,7 @@ import Layout from '../../layouts/Layout.astro';
         </div>
         <div class="bg-[#111] border border-zinc-800 rounded-xl p-4">
           <p class="text-zinc-500 text-sm mb-1">Quiz Completed</p>
-          <p id="stat-quiz" class="text-2xl font-bold text-emerald-400">0</p>
+          <p id="stat-quiz" class="text-2xl font-bold text-amber-400">0</p>
         </div>
         <div class="bg-[#111] border border-zinc-800 rounded-xl p-4">
           <p class="text-zinc-500 text-sm mb-1">Today</p>
@@ -92,6 +96,7 @@ import Layout from '../../layouts/Layout.astro';
                 <th class="px-4 py-3 font-medium">#</th>
                 <th class="px-4 py-3 font-medium">Email</th>
                 <th class="px-4 py-3 font-medium">Name</th>
+                <th class="px-4 py-3 font-medium">Verified</th>
                 <th class="px-4 py-3 font-medium">Referrals</th>
                 <th class="px-4 py-3 font-medium">Source</th>
                 <th class="px-4 py-3 font-medium">Date</th>
@@ -123,13 +128,15 @@ import Layout from '../../layouts/Layout.astro';
 
 <script>
   interface WaitlistEntry {
-    position: number;
+    position: number | null;
     email: string;
     name: string | null;
     source: string | null;
     referralCode: string;
     referredBy: string | null;
     referralCount: number | null;
+    verified: boolean;
+    verifiedAt: string | null;
     createdAt: string;
     quiz: {
       platform: string | null;
@@ -152,6 +159,7 @@ import Layout from '../../layouts/Layout.astro';
   
   // Stats
   const statTotal = document.getElementById('stat-total') as HTMLParagraphElement;
+  const statVerified = document.getElementById('stat-verified') as HTMLParagraphElement;
   const statReferrals = document.getElementById('stat-referrals') as HTMLParagraphElement;
   const statQuiz = document.getElementById('stat-quiz') as HTMLParagraphElement;
   const statToday = document.getElementById('stat-today') as HTMLParagraphElement;
@@ -206,11 +214,13 @@ import Layout from '../../layouts/Layout.astro';
       // Update stats
       const today = new Date().toISOString().split('T')[0];
       const todayCount = entries.filter(e => e.createdAt.startsWith(today)).length;
+      const verifiedCount = entries.filter(e => e.verified).length;
       const referralCount = entries.filter(e => (e.referralCount ?? 0) > 0).length;
       const quizCount = entries.filter(e => e.quiz !== null).length;
-      
+
       totalCount.textContent = data.total.toString();
       statTotal.textContent = data.total.toString();
+      statVerified.textContent = verifiedCount.toString();
       statReferrals.textContent = referralCount.toString();
       statQuiz.textContent = quizCount.toString();
       statToday.textContent = todayCount.toString();
@@ -234,20 +244,26 @@ import Layout from '../../layouts/Layout.astro';
     emptyState.classList.add('hidden');
     entriesTable.innerHTML = data.map(entry => `
       <tr class="border-b border-zinc-800/50 hover:bg-zinc-800/30 transition-colors">
-        <td class="px-4 py-3 text-zinc-400">${entry.position}</td>
+        <td class="px-4 py-3 text-zinc-400">${entry.position ?? '-'}</td>
         <td class="px-4 py-3 text-white font-medium">${entry.email}</td>
         <td class="px-4 py-3 text-zinc-400">${entry.name || '-'}</td>
         <td class="px-4 py-3">
-          ${(entry.referralCount ?? 0) > 0 
-            ? `<span class="text-indigo-400 font-medium">${entry.referralCount}</span>` 
+          ${entry.verified
+            ? '<span class="inline-block w-2 h-2 rounded-full bg-emerald-400" title="Verified"></span>'
+            : '<span class="inline-block w-2 h-2 rounded-full bg-amber-400" title="Pending verification"></span>'
+          }
+        </td>
+        <td class="px-4 py-3">
+          ${(entry.referralCount ?? 0) > 0
+            ? `<span class="text-indigo-400 font-medium">${entry.referralCount}</span>`
             : '<span class="text-zinc-600">0</span>'
           }
         </td>
         <td class="px-4 py-3 text-zinc-500 text-xs">${entry.source || '-'}</td>
         <td class="px-4 py-3 text-zinc-500 text-xs">${new Date(entry.createdAt).toLocaleDateString()}</td>
         <td class="px-4 py-3">
-          ${entry.quiz 
-            ? '<span class="inline-block w-2 h-2 rounded-full bg-emerald-400" title="Quiz completed"></span>' 
+          ${entry.quiz
+            ? '<span class="inline-block w-2 h-2 rounded-full bg-amber-400" title="Quiz completed"></span>'
             : '<span class="inline-block w-2 h-2 rounded-full bg-zinc-700"></span>'
           }
         </td>

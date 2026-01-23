@@ -2,12 +2,12 @@ export const prerender = false;
 
 import type { APIRoute } from 'astro';
 import { drizzle } from 'drizzle-orm/d1';
-import { eq, sql, desc, asc } from 'drizzle-orm';
+import { eq, desc, asc } from 'drizzle-orm';
 import { Resend } from 'resend';
 import { waitlist } from '../../db/schema';
 import { waitlistSchema } from '../../lib/validation';
-import { generateReferralCode } from '../../lib/referral';
-import WelcomeEmail from '../../emails/WelcomeEmail';
+import { generateReferralCode, generateVerificationToken } from '../../lib/referral';
+import VerificationEmail from '../../emails/VerificationEmail';
 
 interface Env {
   DB: D1Database;
@@ -55,14 +55,54 @@ export const POST: APIRoute = async ({ request, locals }) => {
       .limit(1);
 
     if (existing.length > 0) {
-      // Return existing entry's position and code
-      const position = await getWaitlistPosition(db, existing[0].id);
+      const entry = existing[0];
+
+      // If already verified, return existing position
+      if (entry.verified) {
+        const position = await getWaitlistPosition(db, entry.id);
+        return new Response(JSON.stringify({
+          success: true,
+          verified: true,
+          position,
+          referralCode: entry.referralCode,
+          waitlistId: entry.id,
+          message: 'You are already on the waitlist!',
+        }), {
+          status: 200,
+          headers: { 'Content-Type': 'application/json' },
+        });
+      }
+
+      // If not verified, generate new token and resend verification email
+      const verificationToken = generateVerificationToken();
+      await db
+        .update(waitlist)
+        .set({ verificationToken })
+        .where(eq(waitlist.id, entry.id));
+
+      // Send verification email
+      const baseUrl = new URL(request.url).origin;
+      const verificationUrl = `${baseUrl}/api/verify?token=${verificationToken}`;
+
+      if (env.RESEND_API_KEY && env.RESEND_API_KEY !== 're_xxxxxxxxxxxx') {
+        try {
+          const resend = new Resend(env.RESEND_API_KEY);
+          await resend.emails.send({
+            from: 'Illoominate <noreply@illoominate.app>',
+            to: email,
+            subject: 'Verify your email for Illoominate',
+            react: VerificationEmail({ name: name || undefined, verificationUrl }),
+          });
+        } catch (emailError) {
+          console.error('Verification email send failed:', emailError);
+        }
+      }
+
       return new Response(JSON.stringify({
         success: true,
-        position,
-        referralCode: existing[0].referralCode,
-        waitlistId: existing[0].id,
-        message: 'You are already on the waitlist!',
+        verified: false,
+        waitlistId: entry.id,
+        message: 'Verification email resent. Please check your inbox.',
       }), {
         status: 200,
         headers: { 'Content-Type': 'application/json' },
@@ -83,7 +123,10 @@ export const POST: APIRoute = async ({ request, locals }) => {
       attempts++;
     }
 
-    // Insert new waitlist entry
+    // Generate verification token
+    const verificationToken = generateVerificationToken();
+
+    // Insert new waitlist entry (unverified)
     const [entry] = await db
       .insert(waitlist)
       .values({
@@ -93,41 +136,35 @@ export const POST: APIRoute = async ({ request, locals }) => {
         referralCode,
         referredBy: referredBy || null,
         referralCount: 0,
+        verified: 0,
+        verificationToken,
         createdAt: new Date().toISOString(),
       })
       .returning();
 
-    // If referred, increment referrer's count
-    if (referredBy) {
-      await db
-        .update(waitlist)
-        .set({ referralCount: sql`${waitlist.referralCount} + 1` })
-        .where(eq(waitlist.referralCode, referredBy));
-    }
+    // Send verification email (not welcome email - that comes after verification)
+    const baseUrl = new URL(request.url).origin;
+    const verificationUrl = `${baseUrl}/api/verify?token=${verificationToken}`;
 
-    // Calculate position
-    const position = await getWaitlistPosition(db, entry.id);
-
-    // Send confirmation email
     if (env.RESEND_API_KEY && env.RESEND_API_KEY !== 're_xxxxxxxxxxxx') {
       try {
         const resend = new Resend(env.RESEND_API_KEY);
         await resend.emails.send({
           from: 'Illoominate <noreply@illoominate.app>',
           to: email,
-          subject: `You're #${position} on the Illoominate waitlist!`,
-          react: WelcomeEmail({ name: name || undefined, position, referralCode }),
+          subject: 'Verify your email for Illoominate',
+          react: VerificationEmail({ name: name || undefined, verificationUrl }),
         });
       } catch (emailError) {
-        console.error('Email send failed:', emailError);
+        console.error('Verification email send failed:', emailError);
       }
     }
 
     return new Response(JSON.stringify({
       success: true,
-      position,
-      referralCode,
+      verified: false,
       waitlistId: entry.id,
+      message: 'Please check your email to verify and complete signup.',
     }), {
       status: 200,
       headers: { 'Content-Type': 'application/json' },
@@ -143,7 +180,7 @@ export const POST: APIRoute = async ({ request, locals }) => {
 };
 
 /**
- * Calculate waitlist position.
+ * Calculate waitlist position (only counts verified entries).
  * Ordered by: referral_count DESC, created_at ASC
  * Higher referrals = better position, earlier signup breaks ties.
  */
@@ -151,10 +188,11 @@ async function getWaitlistPosition(
   db: ReturnType<typeof drizzle>,
   entryId: number
 ): Promise<number> {
-  // Get all entries ordered by position algorithm
+  // Get all verified entries ordered by position algorithm
   const entries = await db
     .select({ id: waitlist.id })
     .from(waitlist)
+    .where(eq(waitlist.verified, 1))
     .orderBy(desc(waitlist.referralCount), asc(waitlist.createdAt));
 
   const position = entries.findIndex((e) => e.id === entryId) + 1;

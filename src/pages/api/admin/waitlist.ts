@@ -2,7 +2,7 @@ export const prerender = false;
 
 import type { APIRoute } from 'astro';
 import { drizzle } from 'drizzle-orm/d1';
-import { desc, asc, eq } from 'drizzle-orm';
+import { desc, asc } from 'drizzle-orm';
 import { waitlist, quizResponses } from '../../../db/schema';
 
 interface Env {
@@ -46,17 +46,24 @@ export const GET: APIRoute = async ({ request, locals }) => {
     const quizzes = await db.select().from(quizResponses);
     const quizMap = new Map(quizzes.map(q => [q.waitlistId, q]));
 
-    // Build response data with positions
-    const data = entries.map((entry, index) => {
+    // Build response data with positions (only count verified for position)
+    const verifiedEntries = entries.filter(e => e.verified);
+    const data = entries.map((entry) => {
       const quiz = quizMap.get(entry.id);
+      // Position is only for verified entries
+      const position = entry.verified
+        ? verifiedEntries.findIndex(e => e.id === entry.id) + 1
+        : null;
       return {
-        position: index + 1,
+        position,
         email: entry.email,
         name: entry.name,
         source: entry.source,
         referralCode: entry.referralCode,
         referredBy: entry.referredBy,
         referralCount: entry.referralCount,
+        verified: entry.verified === 1,
+        verifiedAt: entry.verifiedAt,
         createdAt: entry.createdAt,
         quiz: quiz ? {
           platform: quiz.platform,
@@ -89,13 +96,15 @@ export const GET: APIRoute = async ({ request, locals }) => {
 };
 
 interface WaitlistEntry {
-  position: number;
+  position: number | null;
   email: string;
   name: string | null;
   source: string | null;
   referralCode: string;
   referredBy: string | null;
   referralCount: number | null;
+  verified: boolean;
+  verifiedAt: string | null;
   createdAt: string;
   quiz: {
     platform: string | null;
@@ -107,18 +116,20 @@ interface WaitlistEntry {
 function generateCSV(data: WaitlistEntry[]): string {
   const headers = [
     'Position', 'Email', 'Name', 'Source', 'Referral Code',
-    'Referred By', 'Referral Count', 'Signed Up',
+    'Referred By', 'Referral Count', 'Verified', 'Verified At', 'Signed Up',
     'Platform', 'Team Size', 'Pain Points'
   ];
 
   const rows = data.map(d => [
-    d.position,
+    d.position ?? '-',
     d.email,
     d.name || '',
     d.source || '',
     d.referralCode,
     d.referredBy || '',
     d.referralCount ?? 0,
+    d.verified ? 'Yes' : 'No',
+    d.verifiedAt || '',
     d.createdAt,
     d.quiz?.platform || '',
     d.quiz?.teamSize || '',
