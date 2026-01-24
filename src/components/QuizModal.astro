@@ -45,6 +45,13 @@
       <form id="quiz-form" class="p-8 pt-6">
         <input type="hidden" id="quiz-waitlist-id" name="waitlistId" />
 
+        <!-- Typing indicator (shown briefly between steps) -->
+        <div id="typing-indicator" class="typing-indicator hidden">
+          <div class="typing-dot"></div>
+          <div class="typing-dot"></div>
+          <div class="typing-dot"></div>
+        </div>
+
         <!-- Step 1: Role -->
         <div id="step-1" class="quiz-step" data-step="1">
           <!-- Chat bubble question -->
@@ -464,7 +471,36 @@
   .quiz-step.exiting {
     animation: slide-out-left 0.3s ease-out forwards;
   }
-  
+
+  .typing-indicator {
+    display: flex;
+    gap: 4px;
+    padding: 8px 12px;
+    background: #1a1a1a;
+    border-radius: 16px;
+    border-top-left-radius: 0;
+    width: fit-content;
+    margin-left: 44px;
+    margin-bottom: 16px;
+  }
+
+  .typing-dot {
+    width: 8px;
+    height: 8px;
+    background: #52525b;
+    border-radius: 50%;
+    animation: typingBounce 1.4s ease-in-out infinite;
+  }
+
+  .typing-dot:nth-child(1) { animation-delay: 0ms; }
+  .typing-dot:nth-child(2) { animation-delay: 200ms; }
+  .typing-dot:nth-child(3) { animation-delay: 400ms; }
+
+  @keyframes typingBounce {
+    0%, 60%, 100% { transform: translateY(0); }
+    30% { transform: translateY(-4px); }
+  }
+
   .quiz-card {
     display: flex;
     flex-direction: column;
@@ -609,18 +645,30 @@
   function showStep(step: number) {
     const currentStepEl = document.querySelector(`[data-step="${currentStep}"]`) as HTMLElement;
     const nextStepEl = document.querySelector(`[data-step="${step}"]`) as HTMLElement;
-    
+    const typingEl = document.getElementById('typing-indicator');
+
     if (currentStepEl && nextStepEl && currentStep !== step) {
       currentStepEl.classList.add('exiting');
-      
+
+      // Show typing indicator briefly when moving forward
+      if (typingEl && step > currentStep) {
+        typingEl.classList.remove('hidden');
+      }
+
       setTimeout(() => {
         currentStepEl.classList.add('hidden');
         currentStepEl.classList.remove('exiting');
+
+        // Hide typing indicator
+        if (typingEl) {
+          typingEl.classList.add('hidden');
+        }
+
         nextStepEl.classList.remove('hidden');
         currentStep = step;
-      }, 250);
+      }, 400); // Slightly longer to show typing
     }
-    
+
     updateProgress(step);
   }
 
