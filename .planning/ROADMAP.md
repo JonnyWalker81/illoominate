@@ -78,9 +78,9 @@ Plans:
 **Plans**: 7 plans in 4 waves
 
 Plans:
-- [ ] 01.2-01-PLAN.md — Performance baseline & CTA contrast verification (Wave 1)
+- [x] 01.2-01-PLAN.md — Performance baseline & CTA contrast verification (Wave 1)
 - [ ] 01.2-02-PLAN.md — Hero code snippet preview & founding member badge (Wave 1)
-- [ ] 01.2-03-PLAN.md — Milestone progress bar in TrustBlock (Wave 1)
+- [x] 01.2-03-PLAN.md — Milestone progress bar in TrustBlock (Wave 1)
 - [ ] 01.2-04-PLAN.md — Technical comparison chart (Native vs Webview) (Wave 2)
 - [ ] 01.2-05-PLAN.md — Referral skip-the-line mechanics (Wave 2)
 - [ ] 01.2-06-PLAN.md — Conversational quiz UI redesign (Wave 3)
@@ -292,7 +292,7 @@ Phases execute in numeric order: 1 -> 1.1 -> 2 -> 3 -> ... -> 13
 |-------|----------------|--------|-----------|
 | 1. Landing Page | 5/5 | Complete | 2026-01-22 |
 | 1.1 Landing Page CRO | 2/2 | Complete | 2026-01-23 |
-| 1.2 Visual Credibility & Gamification | 0/? | Not started | - |
+| 1.2 Visual Credibility & Gamification | 2/7 | In progress | - |
 | 2. Foundation | 0/2 | Not started | - |
 | 3. Authentication | 0/3 | Not started | - |
 | 4. Workspace & Apps | 0/3 | Not started | - |

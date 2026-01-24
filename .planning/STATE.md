@@ -10,9 +10,9 @@ See: .planning/PROJECT.md (updated 2026-01-21)
 ## Current Position
 
 Phase: 1.2 of 15 (Visual Credibility & Gamification) — In progress
-Plan: 03 of 3 complete
-Status: Phase 1.2 plan 03 complete - Milestone progress bar added
-Last activity: 2026-01-24 — Completed 01.2-03-PLAN.md (Milestone Progress Bar)
+Plan: 3 of 7 complete (plans 01, 02, 03 done)
+Status: Hero code snippet and founding member badge complete
+Last activity: 2026-01-24 — Completed 01.2-02-PLAN.md (Hero Code Snippet & Founding Member Badge)
 
 Progress: [██░░░░░░░░░] ~13% (2/15 phases, Phase 1.2 in progress)
 
@@ -53,6 +53,9 @@ Recent decisions affecting current work:
 - [Deploy]: Email from address: noreply@illoominate.app
 - [01.1-02]: Emerald color for quiz CTA to differentiate from primary indigo
 - [01.1-02]: Dual IntersectionObserver pattern for sticky CTA (hero + waitlist)
+- [01.2-01]: CTA contrast verified at 7.2:1 (WCAG AAA) - no changes needed
+- [01.2-02]: Swift as code snippet language (iOS-first positioning)
+- [01.2-02]: Code hidden on mobile to preserve above-fold CTA focus
 
 ### Pending Todos
 
@@ -70,9 +73,9 @@ None.
 ## Session Continuity
 
 Last session: 2026-01-24
-Stopped at: Completed 01.2-03-PLAN.md (Milestone Progress Bar)
+Stopped at: Completed 01.2-02-PLAN.md (Hero Code Snippet & Founding Member Badge)
 Resume file: None
-Next action: Execute remaining Phase 1.2 plans or deploy CRO changes
+Next action: Execute 01.2-04-PLAN.md (Technical Comparison Chart)
 
 ## Phase 1 Summary (COMPLETE & DEPLOYED)
 
