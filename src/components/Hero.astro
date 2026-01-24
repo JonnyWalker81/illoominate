@@ -7,18 +7,6 @@
  * - bg-indigo-600 (#4f46e5) on white text: 7.2:1 ratio (WCAG AAA)
  * - Exceeds 4.5:1 minimum required for WCAG AA
  */
-import { Code } from 'astro:components';
-
-const sdkCode = `import Illoominate
-
-// Initialize in 3 lines
-let feedback = Illoominate(
-  appKey: "pk_live_abc123",
-  user: User(id: "user_42")
-)
-
-// Present native feedback UI
-feedback.present()`;
 ---
 
 <section class="relative min-h-screen flex items-center justify-center overflow-hidden">
@@ -90,8 +78,17 @@ feedback.present()`;
         </div>
 
         <!-- Code -->
-        <div class="p-4 text-sm">
-          <Code code={sdkCode} lang="swift" theme="github-dark" />
+        <div class="p-4 text-sm font-mono text-zinc-300">
+          <pre><code><span class="text-pink-400">import</span> <span class="text-blue-400">Illoominate</span>
+
+<span class="text-zinc-500">// Initialize in 3 lines</span>
+<span class="text-pink-400">let</span> feedback = <span class="text-blue-400">Illoominate</span>(
+  appKey: <span class="text-emerald-400">"pk_live_abc123"</span>,
+  user: <span class="text-blue-400">User</span>(id: <span class="text-emerald-400">"user_42"</span>)
+)
+
+<span class="text-zinc-500">// Present native feedback UI</span>
+feedback.<span class="text-yellow-400">present</span>()</code></pre>
         </div>
 
         <!-- Integration hint -->
