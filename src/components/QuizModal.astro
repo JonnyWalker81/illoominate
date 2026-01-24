@@ -26,15 +26,15 @@
         </svg>
       </button>
 
-      <!-- Progress bar -->
+      <!-- Progress bar with incentive -->
       <div class="px-8 pt-6">
         <div class="flex items-center justify-between mb-2">
           <span id="progress-text" class="text-sm text-zinc-400">Step 1 of 5</span>
-          <span id="progress-percent" class="text-sm text-zinc-500">20%</span>
+          <span id="incentive-text" class="text-sm text-emerald-400 font-medium">4 questions left for +5</span>
         </div>
         <div class="h-1.5 bg-zinc-800 rounded-full overflow-hidden">
-          <div 
-            id="progress-bar" 
+          <div
+            id="progress-bar"
             class="h-full bg-gradient-to-r from-indigo-600 to-indigo-400 rounded-full transition-all duration-500 ease-out"
             style="width: 20%"
           ></div>
@@ -532,7 +532,7 @@
   const form = document.getElementById('quiz-form') as HTMLFormElement;
   const waitlistIdInput = document.getElementById('quiz-waitlist-id') as HTMLInputElement;
   const progressText = document.getElementById('progress-text') as HTMLSpanElement;
-  const progressPercent = document.getElementById('progress-percent') as HTMLSpanElement;
+  const incentiveText = document.getElementById('incentive-text') as HTMLSpanElement;
   const progressBar = document.getElementById('progress-bar') as HTMLDivElement;
   const resultScreen = document.getElementById('result-screen') as HTMLDivElement;
   const resultType = document.getElementById('result-type') as HTMLSpanElement;
@@ -586,12 +586,23 @@
     }
   });
 
-  // Update progress bar
+  // Update progress bar and incentive message
   function updateProgress(step: number) {
     const percent = Math.round((step / totalSteps) * 100);
     progressText.textContent = `Step ${step} of ${totalSteps}`;
-    progressPercent.textContent = `${percent}%`;
     progressBar.style.width = `${percent}%`;
+
+    // Update incentive message
+    if (incentiveText) {
+      const remaining = totalSteps - step;
+      if (remaining === 0) {
+        incentiveText.textContent = 'Almost there!';
+      } else if (remaining === 1) {
+        incentiveText.textContent = '1 question left for +5';
+      } else {
+        incentiveText.textContent = `${remaining} questions left for +5`;
+      }
+    }
   }
 
   // Show specific step
