@@ -56,7 +56,7 @@ Recent decisions affecting current work:
 
 ### Pending Todos
 
-None.
+None. (CRO todo completed with Phase 1.1)
 
 ### Roadmap Evolution
 
