@@ -10,9 +10,9 @@ See: .planning/PROJECT.md (updated 2026-01-21)
 ## Current Position
 
 Phase: 1.2 of 15 (Visual Credibility & Gamification) — In progress
-Plan: 4 of 7 complete (plans 01, 02, 03, 04 done)
-Status: Technical comparison chart complete
-Last activity: 2026-01-24 — Completed 01.2-04-PLAN.md (Technical Comparison Chart)
+Plan: 5 of 7 complete (plans 01, 02, 03, 04, 05 done)
+Status: Referral card enhancement complete
+Last activity: 2026-01-24 — Completed 01.2-05-PLAN.md (Referral Card Enhancement)
 
 Progress: [██░░░░░░░░░] ~13% (2/15 phases, Phase 1.2 in progress)
 
@@ -56,6 +56,8 @@ Recent decisions affecting current work:
 - [01.2-01]: CTA contrast verified at 7.2:1 (WCAG AAA) - no changes needed
 - [01.2-02]: Swift as code snippet language (iOS-first positioning)
 - [01.2-02]: Code hidden on mobile to preserve above-fold CTA focus
+- [01.2-05]: Full referral link copy instead of code-only (better sharing UX)
+- [01.2-05]: Social share via Twitter Intent/LinkedIn share-offsite (no SDKs needed)
 
 ### Pending Todos
 
@@ -73,9 +75,9 @@ None.
 ## Session Continuity
 
 Last session: 2026-01-24
-Stopped at: Completed 01.2-04-PLAN.md (Technical Comparison Chart)
+Stopped at: Completed 01.2-05-PLAN.md (Referral Card Enhancement)
 Resume file: None
-Next action: Execute 01.2-05-PLAN.md (Waitlist Counter)
+Next action: Execute 01.2-06-PLAN.md (Micro-interactions)
 
 ## Phase 1 Summary (COMPLETE & DEPLOYED)
 
