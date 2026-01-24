@@ -1,17 +1,20 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import Hero from '../components/Hero.astro';
+import TrustBlock from '../components/TrustBlock.astro';
 import Features from '../components/Features.astro';
 import WaitlistForm from '../components/WaitlistForm.astro';
+import StickyCTA from '../components/StickyCTA.astro';
 import QuizModal from '../components/QuizModal.astro';
 ---
 
 <Layout title="Illoominate - Native User Feedback">
-  <main>
+  <main class="pb-20 md:pb-0">
     <Hero />
+    <TrustBlock />
     <Features />
     <WaitlistForm />
-    
+
     <!-- Footer -->
     <footer class="py-8 text-center border-t border-zinc-900">
       <p class="text-sm text-zinc-600">
@@ -19,7 +22,10 @@ import QuizModal from '../components/QuizModal.astro';
       </p>
     </footer>
   </main>
-  
+
+  <!-- Sticky CTA for mobile (appears after scrolling past hero) -->
+  <StickyCTA />
+
   <!-- Quiz Modal (triggered after waitlist signup) -->
   <QuizModal />
 </Layout>
