@@ -53,7 +53,8 @@ Recent decisions affecting current work:
 
 ### Pending Todos
 
-None — all todos resolved or in progress
+1 pending todo:
+- **Landing page CRO overhaul** (ui) — Conversion optimization for waitlist signups
 
 ### Blockers/Concerns
 
