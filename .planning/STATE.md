@@ -56,8 +56,7 @@ Recent decisions affecting current work:
 
 ### Pending Todos
 
-1 todo pending:
-- **Remove fake developer count from TrustBlock** (ui) - `src/components/TrustBlock.astro:43`
+None.
 
 ### Roadmap Evolution
 
