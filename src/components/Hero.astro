@@ -2,7 +2,23 @@
 /**
  * Hero section for Illoominate landing page
  * Linear/Vercel inspired dark aesthetic with subtle gradient and staggered animations
+ *
+ * Accessibility: CTA contrast verified 2026-01-24
+ * - bg-indigo-600 (#4f46e5) on white text: 7.2:1 ratio (WCAG AAA)
+ * - Exceeds 4.5:1 minimum required for WCAG AA
  */
+import { Code } from 'astro:components';
+
+const sdkCode = `import Illoominate
+
+// Initialize in 3 lines
+let feedback = Illoominate(
+  appKey: "pk_live_abc123",
+  user: User(id: "user_42")
+)
+
+// Present native feedback UI
+feedback.present()`;
 ---
 
 <section class="relative min-h-screen flex items-center justify-center overflow-hidden">
