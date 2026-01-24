@@ -12,6 +12,7 @@ Illoominate delivers a native-first user feedback platform for indie developers 
 
 - [x] **Phase 1: Landing Page** - Public-facing marketing site with waitlist collection
 - [x] **Phase 1.1: Landing Page CRO** - Conversion optimization for waitlist signups (INSERTED)
+- [ ] **Phase 1.2: Visual Credibility & Gamification** - Hero visuals, technical proof, waitlist momentum (INSERTED)
 - [ ] **Phase 2: Foundation** - Database schema, Supabase setup, multi-tenant RLS
 - [ ] **Phase 3: Authentication** - User accounts with email/password and OAuth
 - [ ] **Phase 4: Workspace & Apps** - Organization and app management
@@ -60,6 +61,30 @@ Plans:
 Plans:
 - [x] 01.1-01-PLAN.md — Hero messaging + Trust block (above-the-fold optimization)
 - [x] 01.1-02-PLAN.md — Quiz incentive + Sticky CTA (engagement optimization)
+
+### Phase 1.2: Visual Credibility & Gamification (INSERTED)
+**Goal**: Bridge the visual credibility gap with product previews and implement high-intent gamification for the waitlist funnel
+**Depends on**: Phase 1.1 (enhances CRO work)
+**Requirements**: None (conversion optimization work)
+**Success Criteria** (what must be TRUE):
+  1. Hero section includes high-fidelity product preview (video/GIF or interactive code snippet)
+  2. "Founding member" offer quantified with specific discount (e.g., "40% lifetime discount for first 500")
+  3. Technical comparison chart proves native vs webview superiority (thread impact, memory, FPS, offline)
+  4. Waitlist momentum visible via activity ticker or milestone progress bar
+  5. Post-signup quiz uses conversational UI with clear position-boost incentive
+  6. Referral mechanism offers meaningful reward (e.g., "skip the line" for referrals)
+  7. Page achieves 95+ Mobile Performance score on PageSpeed Insights
+  8. CTA contrast ratio meets 4.5:1 accessibility standard
+**Plans**: 7 plans in 4 waves
+
+Plans:
+- [ ] 01.2-01-PLAN.md — Performance baseline & CTA contrast verification (Wave 1)
+- [ ] 01.2-02-PLAN.md — Hero code snippet preview & founding member badge (Wave 1)
+- [ ] 01.2-03-PLAN.md — Milestone progress bar in TrustBlock (Wave 1)
+- [ ] 01.2-04-PLAN.md — Technical comparison chart (Native vs Webview) (Wave 2)
+- [ ] 01.2-05-PLAN.md — Referral skip-the-line mechanics (Wave 2)
+- [ ] 01.2-06-PLAN.md — Conversational quiz UI redesign (Wave 3)
+- [ ] 01.2-07-PLAN.md — Final verification & deployment (Wave 4)
 
 ### Phase 2: Foundation
 **Goal**: Multi-tenant database schema with proper isolation exists
@@ -267,6 +292,7 @@ Phases execute in numeric order: 1 -> 1.1 -> 2 -> 3 -> ... -> 13
 |-------|----------------|--------|-----------|
 | 1. Landing Page | 5/5 | Complete | 2026-01-22 |
 | 1.1 Landing Page CRO | 2/2 | Complete | 2026-01-23 |
+| 1.2 Visual Credibility & Gamification | 0/? | Not started | - |
 | 2. Foundation | 0/2 | Not started | - |
 | 3. Authentication | 0/3 | Not started | - |
 | 4. Workspace & Apps | 0/3 | Not started | - |
@@ -287,4 +313,5 @@ Phases execute in numeric order: 1 -> 1.1 -> 2 -> 3 -> ... -> 13
 *Phase 1.1 inserted: 2026-01-23*
 *Phase 1.1 planned: 2026-01-23*
 *Phase 1.1 completed: 2026-01-23*
-*Total phases: 14 | Total plans: 45+ (estimated)*
+*Phase 1.2 inserted: 2026-01-24*
+*Total phases: 15 | Total plans: 45+ (estimated)*
