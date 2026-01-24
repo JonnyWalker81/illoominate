@@ -10,9 +10,9 @@ See: .planning/PROJECT.md (updated 2026-01-21)
 ## Current Position
 
 Phase: 1.2 of 15 (Visual Credibility & Gamification) — In progress
-Plan: 5 of 7 complete (plans 01, 02, 03, 04, 05 done)
-Status: Referral card enhancement complete
-Last activity: 2026-01-24 — Completed 01.2-05-PLAN.md (Referral Card Enhancement)
+Plan: 6 of 7 complete (plans 01, 02, 03, 04, 05, 06 done)
+Status: Conversational quiz UI complete
+Last activity: 2026-01-24 — Completed 01.2-06-PLAN.md (Conversational Quiz UI)
 
 Progress: [██░░░░░░░░░] ~13% (2/15 phases, Phase 1.2 in progress)
 
@@ -58,6 +58,8 @@ Recent decisions affecting current work:
 - [01.2-02]: Code hidden on mobile to preserve above-fold CTA focus
 - [01.2-05]: Full referral link copy instead of code-only (better sharing UX)
 - [01.2-05]: Social share via Twitter Intent/LinkedIn share-offsite (no SDKs needed)
+- [01.2-06]: Chat bubble UI with bot avatar for conversational quiz feel
+- [01.2-06]: 400ms typing indicator delay for natural pacing
 
 ### Pending Todos
 
@@ -75,9 +77,9 @@ None.
 ## Session Continuity
 
 Last session: 2026-01-24
-Stopped at: Completed 01.2-05-PLAN.md (Referral Card Enhancement)
+Stopped at: Completed 01.2-06-PLAN.md (Conversational Quiz UI)
 Resume file: None
-Next action: Execute 01.2-06-PLAN.md (Micro-interactions)
+Next action: Execute 01.2-07-PLAN.md (Favicon and SEO Polishing)
 
 ## Phase 1 Summary (COMPLETE & DEPLOYED)
 
