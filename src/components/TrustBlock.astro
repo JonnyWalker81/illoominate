@@ -1,8 +1,12 @@
 ---
 /**
  * TrustBlock component - Social proof section
- * Displays framework support, momentum marker, and trust signals
+ * Displays framework support, milestone progress bar, and trust signals
  */
+const waitlistCount = 47; // TODO: Fetch from API at build time
+const goal = 500;
+const percentage = Math.min(Math.round((waitlistCount / goal) * 100), 100);
+const remaining = goal - waitlistCount;
 ---
 
 <section class="py-12 border-y border-zinc-900 bg-[#0a0a0a]">
@@ -37,9 +41,34 @@
       </div>
     </div>
 
+    <!-- Milestone Progress -->
+    <div class="max-w-sm mx-auto mb-8 rounded-xl bg-[#111] border border-white/10 p-4">
+      <div class="flex items-center justify-between mb-2">
+        <span class="text-sm text-zinc-400">Founding members</span>
+        <span class="text-sm">
+          <span class="text-indigo-400 font-semibold">{waitlistCount}</span>
+          <span class="text-zinc-500"> / {goal}</span>
+        </span>
+      </div>
+
+      <!-- Progress bar with animation -->
+      <div class="h-2 bg-zinc-800 rounded-full overflow-hidden">
+        <div
+          class="progress-fill h-full bg-gradient-to-r from-indigo-600 to-indigo-400 rounded-full"
+          style={`--target-width: ${percentage}%`}
+        ></div>
+      </div>
+
+      <!-- Urgency message -->
+      <p class="text-xs text-zinc-500 mt-2">
+        <span class="text-emerald-400 font-medium">{remaining} spots left</span>
+        {' '}at founding member pricing
+      </p>
+    </div>
+
     <!-- Early access callout -->
     <p class="text-center text-sm text-zinc-500 mb-8">
-      Be among the first to try
+      Join {waitlistCount}+ developers building the future of feedback
     </p>
 
     <!-- Trust signals -->
@@ -62,3 +91,21 @@
     </div>
   </div>
 </section>
+
+<style>
+  .progress-fill {
+    width: 0;
+    animation: fillProgress 1s ease-out 0.5s forwards;
+  }
+
+  @keyframes fillProgress {
+    to { width: var(--target-width); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .progress-fill {
+      animation: none;
+      width: var(--target-width);
+    }
+  }
+</style>
