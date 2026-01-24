@@ -1,0 +1,68 @@
+---
+/**
+ * Sticky CTA for mobile devices
+ * Appears fixed at bottom of viewport after scrolling past hero
+ * Hides when waitlist section is visible
+ */
+---
+
+<!-- Mobile-only sticky CTA -->
+<div
+  id="sticky-cta"
+  class="fixed bottom-0 left-0 right-0 z-40 md:hidden p-4 pb-[calc(1rem+env(safe-area-inset-bottom))] bg-[#0a0a0a]/95 backdrop-blur-sm border-t border-zinc-800 transform translate-y-full transition-transform duration-300"
+>
+  <a
+    href="#waitlist"
+    class="block w-full py-3.5 bg-indigo-600 hover:bg-indigo-500 text-white text-center font-semibold rounded-xl transition-colors"
+  >
+    Claim Early Access
+  </a>
+</div>
+
+<script>
+  // Show sticky CTA after scrolling past hero
+  const stickyCTA = document.getElementById('sticky-cta');
+  const hero = document.querySelector('section'); // First section is hero
+  const waitlist = document.getElementById('waitlist');
+
+  let heroVisible = true;
+  let waitlistVisible = false;
+
+  function updateStickyVisibility() {
+    // Show CTA only when hero is NOT visible AND waitlist is NOT visible
+    if (!heroVisible && !waitlistVisible) {
+      stickyCTA?.classList.remove('translate-y-full');
+    } else {
+      stickyCTA?.classList.add('translate-y-full');
+    }
+  }
+
+  if (stickyCTA && hero) {
+    const heroObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach(entry => {
+          heroVisible = entry.isIntersecting;
+          updateStickyVisibility();
+        });
+      },
+      { threshold: 0.1 }
+    );
+
+    heroObserver.observe(hero);
+  }
+
+  // Hide when waitlist section is in view
+  if (stickyCTA && waitlist) {
+    const waitlistObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach(entry => {
+          waitlistVisible = entry.isIntersecting;
+          updateStickyVisibility();
+        });
+      },
+      { threshold: 0.3 }
+    );
+
+    waitlistObserver.observe(waitlist);
+  }
+</script>
