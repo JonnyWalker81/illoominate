@@ -11,6 +11,7 @@ Illoominate delivers a native-first user feedback platform for indie developers 
 - Decimal phases (2.1, 2.2): Urgent insertions (marked with INSERTED)
 
 - [x] **Phase 1: Landing Page** - Public-facing marketing site with waitlist collection
+- [ ] **Phase 1.1: Landing Page CRO** - Conversion optimization for waitlist signups (INSERTED)
 - [ ] **Phase 2: Foundation** - Database schema, Supabase setup, multi-tenant RLS
 - [ ] **Phase 3: Authentication** - User accounts with email/password and OAuth
 - [ ] **Phase 4: Workspace & Apps** - Organization and app management
@@ -43,6 +44,22 @@ Plans:
 - [x] 01-03-PLAN.md — Waitlist API and email confirmation
 - [x] 01-04-PLAN.md — Quiz modal and admin dashboard
 - [x] 01-05-PLAN.md — Quiz flow redesign (gap closure)
+
+### Phase 1.1: Landing Page CRO (INSERTED)
+**Goal**: Maximize waitlist signups and quiz completion through conversion optimization
+**Depends on**: Phase 1 (enhances completed landing page)
+**Requirements**: None (optimization work)
+**Success Criteria** (what must be TRUE):
+  1. Hero section uses outcome-oriented messaging with product teaser
+  2. Trust block displays framework logos and momentum marker
+  3. CTA copy optimized ("Claim Early Access" or similar)
+  4. Quiz framed as incentive for position boost
+  5. Mobile experience includes sticky CTA
+**Plans**: 2 plans
+
+Plans:
+- [ ] 01.1-01-PLAN.md — Hero messaging + Trust block (above-the-fold optimization)
+- [ ] 01.1-02-PLAN.md — Quiz incentive + Sticky CTA (engagement optimization)
 
 ### Phase 2: Foundation
 **Goal**: Multi-tenant database schema with proper isolation exists
@@ -244,11 +261,12 @@ Plans:
 ## Progress
 
 **Execution Order:**
-Phases execute in numeric order: 1 -> 2 -> 3 -> ... -> 13
+Phases execute in numeric order: 1 -> 1.1 -> 2 -> 3 -> ... -> 13
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Landing Page | 5/5 | Complete | 2026-01-22 |
+| 1.1 Landing Page CRO | 0/2 | Not started | - |
 | 2. Foundation | 0/2 | Not started | - |
 | 3. Authentication | 0/3 | Not started | - |
 | 4. Workspace & Apps | 0/3 | Not started | - |
@@ -266,4 +284,6 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> ... -> 13
 *Roadmap created: 2026-01-21*
 *Phase 1 planned: 2026-01-21*
 *Phase 1 completed: 2026-01-22*
-*Total phases: 13 | Total plans: 42 (estimated)*
+*Phase 1.1 inserted: 2026-01-23*
+*Phase 1.1 planned: 2026-01-23*
+*Total phases: 14 | Total plans: 45+ (estimated)*
