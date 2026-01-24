@@ -5,16 +5,16 @@
 See: .planning/PROJECT.md (updated 2026-01-21)
 
 **Core value:** Native-feeling feedback submission with transparent, startup-friendly pricing
-**Current focus:** Phase 1.1 (CRO optimization) in progress
+**Current focus:** Phase 1.1 complete, ready for Phase 2
 
 ## Current Position
 
-Phase: 1.1 of 14 (Landing Page CRO) — In progress
-Plan: 02 of 2 complete
-Status: Phase 1 live at https://illoominate.app
-Last activity: 2026-01-24 — Completed 01.1-02-PLAN.md (post-signup engagement)
+Phase: 2 of 14 (Foundation) — Ready to start
+Plan: Phase 1.1 complete, Phase 2 not started
+Status: Phase 1 + 1.1 complete, ready for deployment
+Last activity: 2026-01-23 — Phase 1.1 verified and complete
 
-Progress: [█░░░░░░░░░░] ~10% (1.5/14 phases)
+Progress: [██░░░░░░░░░] ~14% (2/14 phases)
 
 ## Performance Metrics
 
@@ -56,8 +56,7 @@ Recent decisions affecting current work:
 
 ### Pending Todos
 
-1 pending todo:
-- **Landing page CRO overhaul** (ui) — Conversion optimization for waitlist signups
+None.
 
 ### Roadmap Evolution
 
@@ -69,10 +68,10 @@ None.
 
 ## Session Continuity
 
-Last session: 2026-01-24
-Stopped at: Completed 01.1-02-PLAN.md
+Last session: 2026-01-23
+Stopped at: Phase 1.1 verified complete
 Resume file: None
-Next action: Phase 1.1 complete - deploy and verify, then proceed to Phase 2
+Next action: Deploy Phase 1.1 changes, then `/gsd:discuss-phase 2`
 
 ## Phase 1 Summary (COMPLETE & DEPLOYED)
 
@@ -108,6 +107,26 @@ npx wrangler deploy --domain illoominate.app
 2. ✓ Waitlist signup with email capture
 3. ✓ Confirmation email via Resend
 4. ✓ Admin dashboard with export
+
+## Phase 1.1 Summary (COMPLETE)
+
+Phase 1.1 (Landing Page CRO) completed 2026-01-23:
+
+**Changes:**
+- Hero: Outcome-oriented headline ("Ship fixes before users complain"), "Claim Early Access" CTA
+- TrustBlock: iOS/Web/Android logos, momentum marker, GDPR + performance trust signals
+- Quiz: +5 position boost badge, "Jump ahead in line" framing, emerald button
+- StickyCTA: Mobile-only sticky CTA with IntersectionObserver visibility control
+
+**Plans executed:** 2 (01.1-01 through 01.1-02)
+**All 5 success criteria verified**
+
+**Deployment Commands:**
+```bash
+npm run build
+echo "_worker.js" > dist/.assetsignore
+npx wrangler deploy --domain illoominate.app
+```
 
 ## Phase 2 Readiness
 

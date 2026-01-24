@@ -11,7 +11,7 @@ Illoominate delivers a native-first user feedback platform for indie developers 
 - Decimal phases (2.1, 2.2): Urgent insertions (marked with INSERTED)
 
 - [x] **Phase 1: Landing Page** - Public-facing marketing site with waitlist collection
-- [ ] **Phase 1.1: Landing Page CRO** - Conversion optimization for waitlist signups (INSERTED)
+- [x] **Phase 1.1: Landing Page CRO** - Conversion optimization for waitlist signups (INSERTED)
 - [ ] **Phase 2: Foundation** - Database schema, Supabase setup, multi-tenant RLS
 - [ ] **Phase 3: Authentication** - User accounts with email/password and OAuth
 - [ ] **Phase 4: Workspace & Apps** - Organization and app management
@@ -58,8 +58,8 @@ Plans:
 **Plans**: 2 plans
 
 Plans:
-- [ ] 01.1-01-PLAN.md — Hero messaging + Trust block (above-the-fold optimization)
-- [ ] 01.1-02-PLAN.md — Quiz incentive + Sticky CTA (engagement optimization)
+- [x] 01.1-01-PLAN.md — Hero messaging + Trust block (above-the-fold optimization)
+- [x] 01.1-02-PLAN.md — Quiz incentive + Sticky CTA (engagement optimization)
 
 ### Phase 2: Foundation
 **Goal**: Multi-tenant database schema with proper isolation exists
@@ -266,7 +266,7 @@ Phases execute in numeric order: 1 -> 1.1 -> 2 -> 3 -> ... -> 13
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Landing Page | 5/5 | Complete | 2026-01-22 |
-| 1.1 Landing Page CRO | 0/2 | Not started | - |
+| 1.1 Landing Page CRO | 2/2 | Complete | 2026-01-23 |
 | 2. Foundation | 0/2 | Not started | - |
 | 3. Authentication | 0/3 | Not started | - |
 | 4. Workspace & Apps | 0/3 | Not started | - |
@@ -286,4 +286,5 @@ Phases execute in numeric order: 1 -> 1.1 -> 2 -> 3 -> ... -> 13
 *Phase 1 completed: 2026-01-22*
 *Phase 1.1 inserted: 2026-01-23*
 *Phase 1.1 planned: 2026-01-23*
+*Phase 1.1 completed: 2026-01-23*
 *Total phases: 14 | Total plans: 45+ (estimated)*
