@@ -63,6 +63,7 @@ Recent decisions affecting current work:
 - [01.2-06]: 400ms typing indicator delay for natural pacing
 - [01.2-07]: Milestone progress hidden when waitlist <= 10 (avoid low number embarrassment)
 - [01.2-07]: Shiki over Astro Code component for SSR compatibility
+- [01.2-07]: System fonts over Google Fonts for PageSpeed (100 mobile score)
 
 ### Pending Todos
 
@@ -157,7 +158,7 @@ Phase 1.2 (Visual Credibility & Gamification) completed 2026-01-24:
 4. Waitlist momentum (milestone progress)
 5. Conversational quiz UI
 6. Referral mechanism (+3 spots)
-7. 95+ Mobile PageSpeed
+7. 100 Mobile PageSpeed (optimized from 91)
 8. CTA contrast 4.5:1+
 
 **Deployment Commands:**

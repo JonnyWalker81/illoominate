@@ -12,7 +12,7 @@ Illoominate delivers a native-first user feedback platform for indie developers 
 
 - [x] **Phase 1: Landing Page** - Public-facing marketing site with waitlist collection
 - [x] **Phase 1.1: Landing Page CRO** - Conversion optimization for waitlist signups (INSERTED)
-- [ ] **Phase 1.2: Visual Credibility & Gamification** - Hero visuals, technical proof, waitlist momentum (INSERTED)
+- [x] **Phase 1.2: Visual Credibility & Gamification** - Hero visuals, technical proof, waitlist momentum (INSERTED)
 - [ ] **Phase 2: Foundation** - Database schema, Supabase setup, multi-tenant RLS
 - [ ] **Phase 3: Authentication** - User accounts with email/password and OAuth
 - [ ] **Phase 4: Workspace & Apps** - Organization and app management
@@ -81,10 +81,10 @@ Plans:
 - [x] 01.2-01-PLAN.md — Performance baseline & CTA contrast verification (Wave 1)
 - [x] 01.2-02-PLAN.md — Hero code snippet preview & founding member badge (Wave 1)
 - [x] 01.2-03-PLAN.md — Milestone progress bar in TrustBlock (Wave 1)
-- [ ] 01.2-04-PLAN.md — Technical comparison chart (Native vs Webview) (Wave 2)
-- [ ] 01.2-05-PLAN.md — Referral skip-the-line mechanics (Wave 2)
-- [ ] 01.2-06-PLAN.md — Conversational quiz UI redesign (Wave 3)
-- [ ] 01.2-07-PLAN.md — Final verification & deployment (Wave 4)
+- [x] 01.2-04-PLAN.md — Technical comparison chart (Native vs Webview) (Wave 2)
+- [x] 01.2-05-PLAN.md — Referral skip-the-line mechanics (Wave 2)
+- [x] 01.2-06-PLAN.md — Conversational quiz UI redesign (Wave 3)
+- [x] 01.2-07-PLAN.md — Final verification & deployment (Wave 4)
 
 ### Phase 2: Foundation
 **Goal**: Multi-tenant database schema with proper isolation exists
@@ -292,7 +292,7 @@ Phases execute in numeric order: 1 -> 1.1 -> 2 -> 3 -> ... -> 13
 |-------|----------------|--------|-----------|
 | 1. Landing Page | 5/5 | Complete | 2026-01-22 |
 | 1.1 Landing Page CRO | 2/2 | Complete | 2026-01-23 |
-| 1.2 Visual Credibility & Gamification | 3/7 | In progress | - |
+| 1.2 Visual Credibility & Gamification | 7/7 | Complete | 2026-01-24 |
 | 2. Foundation | 0/2 | Not started | - |
 | 3. Authentication | 0/3 | Not started | - |
 | 4. Workspace & Apps | 0/3 | Not started | - |
@@ -314,4 +314,6 @@ Phases execute in numeric order: 1 -> 1.1 -> 2 -> 3 -> ... -> 13
 *Phase 1.1 planned: 2026-01-23*
 *Phase 1.1 completed: 2026-01-23*
 *Phase 1.2 inserted: 2026-01-24*
+*Phase 1.2 planned: 2026-01-24*
+*Phase 1.2 completed: 2026-01-24*
 *Total phases: 15 | Total plans: 45+ (estimated)*
