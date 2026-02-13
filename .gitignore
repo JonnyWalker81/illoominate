@@ -21,3 +21,8 @@ drizzle/meta/
 
 # Logs
 *.log
+
+# Nix
+result
+.direnv/
+.envrc
