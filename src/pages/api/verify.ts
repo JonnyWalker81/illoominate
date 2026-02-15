@@ -44,7 +44,7 @@ export const GET: APIRoute = async ({ request, locals, redirect }) => {
     // Check if already verified
     if (entry.verified) {
       const position = await getWaitlistPosition(db, entry.id);
-      return redirect(`/verified?success=true&position=${position}&code=${entry.referralCode}`);
+      return redirect(`/verified?success=true&position=${position}&code=${entry.referralCode}&wid=${entry.id}`);
     }
 
     // Mark as verified
@@ -87,7 +87,7 @@ export const GET: APIRoute = async ({ request, locals, redirect }) => {
       }
     }
 
-    return redirect(`/verified?success=true&position=${position}&code=${entry.referralCode}`);
+    return redirect(`/verified?success=true&position=${position}&code=${entry.referralCode}&wid=${entry.id}`);
 
   } catch (error) {
     console.error('Verification error:', error);
